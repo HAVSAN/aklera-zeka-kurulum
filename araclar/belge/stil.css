@@ -1,0 +1,126 @@
+/* Belge çıktı hattı — yazdırma stili (A4, Türkçe)
+   Kullanım: md2pdf.ps1 bu dosyayı HTML'e gömer, sonra tarayıcı PDF'e basar.
+   Değiştirmek serbest: font, kenar boşluğu ve punto en üstteki değişkenlerde. */
+
+:root {
+  --govde-font: "Times New Roman", "Liberation Serif", Georgia, serif;
+  --baslik-font: "Calibri", "Segoe UI", "Liberation Sans", Arial, sans-serif;
+  --govde-punto: 12pt;
+  --satir-araligi: 1.5;
+  --metin: #111;
+  --soluk: #555;
+  --cizgi: #bbb;
+}
+
+@page {
+  size: A4;
+  margin: 2.5cm 2.5cm 2.5cm 3cm; /* sol kenar cilt payi icin genis */
+}
+
+html { font-size: var(--govde-punto); }
+
+body {
+  font-family: var(--govde-font);
+  font-size: var(--govde-punto);
+  line-height: var(--satir-araligi);
+  color: var(--metin);
+  text-align: justify;
+  hyphens: auto;
+  margin: 0;
+}
+
+/* Basliklar — sayfa sonunda yalniz kalmasin */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--baslik-font);
+  line-height: 1.25;
+  break-after: avoid;
+  page-break-after: avoid;
+  text-align: left;
+}
+
+h1 { font-size: 20pt; margin: 0 0 0.8em; }
+h2 { font-size: 15pt; margin: 1.6em 0 0.5em; }
+h3 { font-size: 13pt; margin: 1.3em 0 0.4em; }
+h4 { font-size: 12pt; margin: 1.1em 0 0.3em; font-style: italic; }
+
+p { margin: 0 0 0.6em; }
+
+/* Akademik gövde: ilk satır girintisi. Başlık sonrası ilk paragrafta girinti olmaz. */
+body.girintili p { text-indent: 1.25cm; margin-bottom: 0; }
+body.girintili h1 + p,
+body.girintili h2 + p,
+body.girintili h3 + p,
+body.girintili blockquote + p,
+body.girintili table + p { text-indent: 0; }
+
+ul, ol { margin: 0 0 0.6em 0; padding-left: 1.6em; }
+li { margin-bottom: 0.2em; }
+
+blockquote {
+  margin: 0.8em 0 0.8em 1.2cm;
+  padding-left: 0.6em;
+  border-left: 2px solid var(--cizgi);
+  color: var(--soluk);
+  font-size: 11pt;
+}
+
+/* Tablolar — satırlar sayfa arasında bölünmesin */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0.8em 0;
+  font-size: 10.5pt;
+  page-break-inside: auto;
+}
+thead { display: table-header-group; } /* uzun tabloda baslik her sayfada tekrar eder */
+tr { page-break-inside: avoid; break-inside: avoid; }
+th, td {
+  border: 1px solid var(--cizgi);
+  padding: 4pt 6pt;
+  text-align: left;
+  vertical-align: top;
+}
+th { background: #f2f2f2; font-family: var(--baslik-font); font-weight: 600; }
+
+code, pre {
+  font-family: "Consolas", "Courier New", monospace;
+  font-size: 10pt;
+}
+pre {
+  background: #f6f6f6;
+  border: 1px solid #e0e0e0;
+  padding: 6pt 8pt;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  page-break-inside: avoid;
+}
+code { background: #f2f2f2; padding: 0 2px; }
+pre code { background: none; padding: 0; }
+
+img { max-width: 100%; }
+
+hr { border: none; border-top: 1px solid var(--cizgi); margin: 1.2em 0; }
+
+a { color: #14425f; text-decoration: none; }
+
+/* Kaynakça: asılı girinti (APA). Markdown'da "## Kaynakça" başlığından
+   sonraki liste/paragraflar bu sınıfla sarılır. */
+.kaynakca p, .kaynakca li {
+  text-indent: -1.25cm;
+  margin-left: 1.25cm;
+  text-align: left;
+}
+.kaynakca ul, .kaynakca ol { list-style: none; padding-left: 0; }
+
+/* Kapak sayfası (isteğe bağlı: <div class="kapak">...</div>) */
+.kapak {
+  text-align: center;
+  page-break-after: always;
+  padding-top: 6cm;
+}
+.kapak h1 { font-size: 24pt; text-align: center; }
+
+/* Ekranda okurken sayfa genişliğini taklit et (PDF'i etkilemez) */
+@media screen {
+  body { max-width: 17cm; margin: 2cm auto; padding: 0 1cm; }
+}
