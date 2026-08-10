@@ -1,0 +1,21 @@
+# Bu depo yalnız iskelet ve talimat taşır — kişisel kasa içeriği ASLA girmez.
+# (Ayrıntı: KATKI.md)
+
+# Sırlar
+.env
+.env.*
+*.key
+*.pem
+secrets*
+
+# Kurulmuş kasa içeriği yanlışlıkla kopyalanırsa
+memory/
+Gunluk/2*.md
+!iskelet/**
+
+# İşletim sistemi / editör
+desktop.ini
+Thumbs.db
+.DS_Store
+.vscode/
+.idea/
