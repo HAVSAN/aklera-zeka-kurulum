@@ -69,7 +69,7 @@ Seçilen profili not et — bundan sonraki her adımda `<PROFİL>` diye anılaca
 | 3 | **git** | Bu deponun çekilmesi | ✅ Zorunlu |
 | 4 | **Obsidian** | Üretilen notların okunduğu/düzenlendiği yer | ⭕ Şiddetle önerilir |
 | 5 | **Bulut yedekleme** (Google Drive Desktop / OneDrive) | Kasa yedeği | ⭕ Şiddetle önerilir |
-| 6 | Docker, LaTeX, Pandoc | Belge dönüştürme hattı | ❌ **Zorunlu değil** — sonra |
+| 6 | Docker, LaTeX, Pandoc | Belge dönüştürme hattı | ❌ **Zorunlu değil** — bkz. Adım 7 (opsiyonel) |
 
 **Eksik olan için:**
 - Kendin kurabiliyorsan (paket yöneticisi varsa) **kurulum komutunu çalıştırmayı öner**,
@@ -271,6 +271,79 @@ Hepsi geçtiyse kullanıcıya şunu söyle:
 > "Kurulum tamam. Takıldığında `ILK-GUN.md` dosyasına bak — tek sayfa.
 > Neyi yapıp neyi yapmadığım `SINIRLAR.md`'de yazılı, bir kez okumanı öneririm."
 
+Kurulum burada **biter.** Aşağıdaki Adım 7 isteğe bağlıdır; kullanıcı belge çıktısı
+(PDF/Word/LaTeX) isteyecekse şimdi ya da ileride uygulanır.
+
+---
+
+## Adım 7 (OPSİYONEL) — Belge çıktı hattı: PDF · Word · LaTeX
+
+⛔ **Bu adım zorunlu değildir.** Adım 6 geçtiyse sistem çalışıyor demektir. Buradaki
+kurulum yalnız "bunu PDF yap", "Word'e çevir", "makale formatına dök" denecekse gerekir.
+
+Kullanıcıya **onay kutusuyla** sor:
+
+> **"Yazdıklarını dosyaya (PDF/Word) çevirmem gerekecek mi?"**
+
+| Seçenek | Kurulacak | Boyut | Ne verir |
+|---|---|---|---|
+| **Sadece PDF yeter** | *hiçbir şey* | 0 | Markdown → **PDF** (tarayıcı basar) |
+| **Word ve kaynakça da lazım** | Pandoc | ~200 MB | + **.docx**, + `.bib`'ten **otomatik kaynakça**, + `.tex` kaynağı |
+| **LaTeX derlemem gerekiyor** (dergi şablonu) | Pandoc + Tectonic | +~25 MB | + `.tex` → **PDF** derleme |
+| **Şimdilik hayır** | — | — | Sonradan bu adım tek başına uygulanabilir |
+
+**Katman 0 zaten kuruludur** — Windows'ta Edge varsa PDF üretilir, kurulum gerekmez.
+
+### 7.1 Kurulum (seçime göre)
+
+- **Word/kaynakça seçildiyse:**
+  ```
+  winget install --id JohnMacFarlane.Pandoc
+  ```
+  Kurulumdan sonra **terminali kapatıp yeniden aç** (PATH tazelensin).
+- **LaTeX seçildiyse** (Pandoc'a ek olarak):
+  ```
+  powershell -ExecutionPolicy Bypass -File araclar\belge\tectonic-kur.ps1
+  ```
+  Tek `.exe` indirir (~25 MB), PATH'e ekler. ⛔ **MiKTeX / TeX Live kurma** — 1-5 GB'lık
+  dağıtımlara bu iş için gerek yok.
+
+### 7.2 Doğrulama — ZORUNLU
+
+Kurulum bitince şunu çalıştır ve çıktısını kullanıcıya göster:
+
+```
+powershell -ExecutionPolicy Bypass -File araclar\belge\belge-hatti-kontrol.ps1
+```
+
+Bu betik "kurulu görünüyor" demez: her katman için **örnek bir belgeyi gerçekten üretir**
+ve içindeki Türkçe denetim satırını arar. Kurulmamış katman `ATLANDI` yazar (hata değil),
+kurulu ama çalışmayan katman `BOZUK` yazar ve **çıkış kodu 1** döner.
+
+Son adım kullanıcıdadır: üretilen PDF'i açsın ve şu satırın bozulmadığını **gözüyle görsün**:
+
+> DENETIM: ığüşöçİĞÜŞÖÇ — Pijamalı hasta yağız şoföre çabucak güvendi.
+
+### 7.3 Bundan sonra hangi komutu ne zaman çalıştıracaksın
+
+| Kullanıcı ne derse | Sen ne çalıştırırsın |
+|---|---|
+| "bunu PDF yap" | `araclar\belge\md2pdf.ps1 -Girdi <dosya.md>` |
+| "akademik biçimde PDF yap" (ilk satır girintili) | `md2pdf.ps1 -Girdi <dosya.md> -Girintili` |
+| "Word'e çevir" | `araclar\belge\md2docx.ps1 -Girdi <dosya.md>` |
+| "kaynakçayı otomatik yaz" | `md2docx.ps1 -Girdi <dosya.md> -Kaynakca <kaynakca.bib> -AtifStili <apa.csl>` |
+| "kurumun şablonuyla Word ver" | `md2docx.ps1 -Girdi <dosya.md> -Sablon <sablon.docx>` |
+| "LaTeX'e çevir" | `araclar\belge\md2tex.ps1 -Girdi <dosya.md>` |
+| "derginin şablonuna gövde lazım" | `md2tex.ps1 -Girdi <dosya.md> -Parca` (derginin `.cls` dosyasını **bozma**) |
+| "LaTeX'i derle / PDF'ini gör" | `araclar\belge\tex2pdf.ps1 -Girdi <dosya.tex>` |
+
+Hazır şablonlar: `sablonlar\akademisyen\latex\makale.tex` (Türkçe, XeLaTeX) ve
+`kaynakca.bib`. Kurulumda akademisyen profili seçildiyse bu ikisini `<KASA>\Sablonlar\`
+altına da kopyala.
+
+**✅ Doğrulama:** `belge-hatti-kontrol.ps1` çıkış kodu 0 döndü ve kullanıcı üretilen PDF'i
+açıp Türkçe denetim satırını gördü.
+
 ---
 
 ## Tuzaklar → çözüm
@@ -291,6 +364,11 @@ Hepsi geçtiyse kullanıcıya şunu söyle:
 | Kullanıcı terminal ekranı görünce takılıyor | Beklenen durum | Terminal panelini kapat. Bu sistemde terminal **gerekmiyor** |
 | Türkçe karakterler bozuk görünüyor | Dosya kodlaması | Dosyaları **UTF-8** kaydet; dosya **adlarında** Türkçe karakter kullanma |
 | Kullanıcı "profil yanlış seçilmiş" diyor | Adım 0'da yanlış rol | Yeni profilin `CLAUDE.md`'sini kopyala, eksik klasörleri ekle — **hafızayı silme**, o hâlâ geçerli |
+| `pandoc` "tanınmıyor" diyor, oysa kuruldu | Açık terminal eski PATH'i taşıyor | Terminali kapat–aç. Betikler kurulum klasörüne de bakar; yine olmazsa `belge-hatti-kontrol.ps1` çalıştır |
+| PDF üretiliyor ama Türkçe harfler kutu/soru işareti | Dosya UTF-8 değil | `.md` dosyasını **UTF-8** kaydet; dosya adlarında Türkçe karakter kullanma |
+| LaTeX derlemesi "font bulunamadı" diyor | `\setmainfont` sistemde olmayan bir fontu istiyor | `makale.tex` içindeki fontu kurulu bir fontla değiştir (`Calibri`) ya da `TeX Gyre Termes` kullan |
+| İlk LaTeX derlemesi çok uzun sürüyor | Tectonic TeX paketlerini ilk seferde indiriyor | Normal. Bir kereye mahsustur; sonraki derlemeler saniyeler sürer |
+| Kullanıcı "Word şablonumuz var" diyor | Kurumsal biçim isteniyor | `md2docx.ps1 -Sablon <sablon.docx>` — şablonun **stilleri** kullanılır, içeriği değil |
 
 ---
 
@@ -300,7 +378,7 @@ Hepsi geçtiyse kullanıcıya şunu söyle:
 README.md                  → bu dosya, kurulumun tek giriş noktası
 KATKI.md                   → katkı kuralları + gizlilik sınırı
 KURULUM-KONTROL.md         → her kurulumda doldurulan kontrol listesi
-LISANS-KARARI-BEKLIYOR.md  → lisans henüz seçilmedi
+LICENSE                    → MIT
 
 profiller/
   _ortak.md                → her profilde aynı olan çekirdek kurallar → kasada CEKIRDEK.md
@@ -318,6 +396,17 @@ sablonlar/
 
 istemler/
   isg.md  genel.md  akademisyen.md  yazilimci.md
+
+araclar/
+  belge/                   → Adım 7'nin (opsiyonel) belge çıktı hattı
+    md2pdf.ps1             → Markdown → PDF   (kurulum gerektirmez)
+    md2docx.ps1            → Markdown → Word  (Pandoc)
+    md2tex.ps1             → Markdown → LaTeX kaynağı (Pandoc)
+    tex2pdf.ps1            → LaTeX → PDF      (Tectonic)
+    tectonic-kur.ps1       → LaTeX derleyicisini kurar (~25 MB)
+    belge-hatti-kontrol.ps1→ hattın çalıştığını ÜRETEREK ölçer
+    stil.css               → PDF sayfa düzeni (A4, Türkçe tipografi)
+    ornek/                 → örnek belgeler + derlenmiş kanıt çıktıları
 ```
 
 ---

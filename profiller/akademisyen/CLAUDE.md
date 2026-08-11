@@ -56,10 +56,15 @@ betikleridir. Öncelik daima **metin, kaynak ve doğruluk**tur.
     `fontspec` tercihini kullanıcıya bırak; varsayılan olarak **UTF-8 + XeLaTeX uyumlu** yaz.
   - Dergi/kurum şablonu varsa **onun sınıf dosyasını (`.cls`) bozma**, sadece gövdeyi doldur.
   - Şekil ve tablolara `\label` ver, metinde `\ref` ile atıf yap; elle numara yazma.
-- Kullanıcı Word/PDF isterse önce `.md` yaz, sonra dönüştür. Dönüştürme aracı yoksa
-  kullanıcıya **hangi aracın gerektiğini ve nasıl kurulacağını** adım adım söyle.
-- **Çıktı hattı henüz kurulmamış olabilir.** Derleyemiyorsan bunu açıkça söyle, kaynak dosyaları
-  yine de yaz — kullanıcı başka bir makinede derleyebilir.
+- Kullanıcı Word/PDF isterse önce `.md` yaz, sonra dönüştür — hattın komutları
+  **ortak çekirdek bölüm 9**'da yazılıdır (`araclar\belge\`).
+- **Hattın kurulu olduğunu varsayma, ölç:** `belge-hatti-kontrol.ps1`. Eksik aracın
+  kurulumu tek komuttur; kullanıcıya söyle, onayıyla kur, sonra doğrula.
+- Derleyemiyorsan bunu açıkça söyle, kaynak dosyaları (`.tex`, `.bib`) **yine de yaz** —
+  kullanıcı başka bir makinede ya da Overleaf'te derleyebilir.
+- Hazır şablonlar: `Sablonlar\` altındaki `makale.tex` (Türkçe, XeLaTeX) ve `kaynakca.bib`.
+  Markdown'dan yazıyorsan atıfları `[@anahtar]` biçiminde ver; kaynakçayı
+  `md2docx.ps1 -Kaynakca ... -AtifStili ...` **otomatik** üretir, elle yazma.
 
 ---
 

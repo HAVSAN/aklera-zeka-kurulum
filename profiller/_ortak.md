@@ -50,6 +50,10 @@ Kullanıcının rolü ve o role özgü kurallar, bu dosyayla birlikte duran **pr
 3. **İlerlemeyi bloklayan eksik bilgi** — tahminle doldurulamayan (hangi kurum, hangi
    tarih, hangi hesap).
 
+**Dördüncü bir durum profilden gelebilir:** profil dosyası bir konuda açıkça **"bir kez sor"**
+diyorsa (örn. atıf stili, yazının gideceği kişi), o soru meşrudur. Cevabı `memory\` altına yaz
+ve **bir daha sorma.** Bunun dışında yukarıdaki üç durum geçerlidir.
+
 **Sorarken daima onay kutusu kullan (AskUserQuestion)** — düz metin soru cümlesi değil.
 Ne yapacağını kutunun içine yaz, önerdiğin seçeneği **ilk sıraya** koy ve "(Önerilen)" yaz.
 Kullanıcı tıklayıp geçsin, elle yazmak zorunda kalmasın.
@@ -152,7 +156,28 @@ Böyle bir istek gelirse **ne yapabileceğini söyle, kararı kullanıcıya bır
 
 ---
 
-## 9. Her yanıtın sonunda
+## 9. Belge çıktısı (PDF · Word · LaTeX)
+
+Kullanıcı "bunu PDF yap", "Word'e çevir" dediğinde: **önce `.md` yaz**, sonra dönüştür.
+Dönüştürme hattı deponun `araclar\belge\` klasöründedir ve **kurulu olmayabilir**:
+
+| İstek | Komut | Gereken |
+|---|---|---|
+| PDF | `md2pdf.ps1 -Girdi <dosya.md>` | *hiçbir şey* (tarayıcı basar) |
+| Word | `md2docx.ps1 -Girdi <dosya.md>` | Pandoc |
+| Word + otomatik kaynakça | `md2docx.ps1 -Girdi <dosya.md> -Kaynakca <x.bib> -AtifStili <apa.csl>` | Pandoc |
+| LaTeX kaynağı | `md2tex.ps1 -Girdi <dosya.md>` | Pandoc |
+| LaTeX derleme | `tex2pdf.ps1 -Girdi <dosya.tex>` | Tectonic |
+
+- Hattın çalışıp çalışmadığını **tahmin etme**, ölç: `belge-hatti-kontrol.ps1`.
+- Bir araç eksikse kullanıcıya **tek satırlık kurulum komutunu** söyle, kurulumu onun onayıyla
+  yap ve sonra doğrula. Kurulamıyorsa `.md` dosyasını yine de üret — içerik kaybolmasın.
+- Dönüştürme bittiğinde **çıktının tam yolunu** söyle ve kullanıcıdan dosyayı açıp
+  Türkçe karakterlere bakmasını iste.
+
+---
+
+## 10. Her yanıtın sonunda
 
 İş bitirdiğin yanıtın sonunda tek satır:
 **kaydettiğin dosyanın tam yolu** + varsa **sıradaki önerin**.
