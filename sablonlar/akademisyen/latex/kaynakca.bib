@@ -1,0 +1,81 @@
+% =====================================================================
+%  KAYNAKÇA (BibTeX / BibLaTeX) — Kişisel Zeka Kurulumu
+%
+%  Bu dosya iki yerde kullanılır:
+%   1) Word/PDF çıktısında (LaTeX GEREKMEZ):
+%        md2docx.ps1 -Girdi makale.md -Kaynakca kaynakca.bib -AtifStili apa.csl
+%      Markdown içinde atıf: [@yilmaz2024] ya da [@yilmaz2024, s. 45]
+%   2) LaTeX'te biblatex ile (Overleaf / tam TeX kurulumu):
+%        \usepackage[style=apa,backend=biber]{biblatex}
+%        \addbibresource{kaynakca.bib}
+%
+%  ⛔ KURAL: buraya yalnız GERÇEKTEN eriştiğin kaynak girer. DOI'si doğrulanmamış
+%  künyeyi `note = {DOĞRULANMALI}` alanıyla işaretle, sessizce bırakma.
+%  Anahtar biçimi: soyadYılKısaKelime  (ör. yilmaz2024biçim)
+% =====================================================================
+
+@book{yilmaz2024,
+  author    = {Yılmaz, Ayşe},
+  title     = {Belge üretim hatlarında biçim tutarlılığı},
+  publisher = {Örnek Yayınevi},
+  address   = {Ankara},
+  year      = {2024},
+  edition   = {2},
+  isbn      = {978-000-0000-00-0},
+  langid    = {turkish}
+}
+
+@article{ozturk2023,
+  author  = {Öztürk, Bülent and Şahin, Cemile},
+  title   = {Çok yazarlı bir çalışma başlığı},
+  journal = {Örnek Dergi},
+  year    = {2023},
+  volume  = {12},
+  number  = {3},
+  pages   = {45--67},
+  doi     = {10.0000/ornek.2023.12345},
+  langid  = {turkish}
+}
+
+@incollection{demir2022,
+  author    = {Demir, Çiğdem},
+  title     = {Kitap içi bölüm başlığı},
+  booktitle = {Derleme Kitabın Adı},
+  editor    = {Kaya, Deniz},
+  publisher = {Örnek Üniversitesi Yayınları},
+  address   = {İstanbul},
+  year      = {2022},
+  pages     = {101--128},
+  langid    = {turkish}
+}
+
+@inproceedings{arslan2021,
+  author       = {Arslan, Elif},
+  title        = {Bildiri başlığı},
+  booktitle    = {Örnek Ulusal Kongre Bildiri Kitabı},
+  year         = {2021},
+  pages        = {12--19},
+  address      = {İzmir},
+  organization = {Örnek Derneği},
+  langid       = {turkish}
+}
+
+@online{kurum2025,
+  author  = {{Örnek Kurum}},
+  title   = {Çevrimiçi kaynağın başlığı},
+  year    = {2025},
+  url     = {https://example.org/ornek-belge},
+  urldate = {2026-08-10},
+  note    = {Erişim tarihi künyeye yazılır},
+  langid  = {turkish}
+}
+
+@thesis{koc2020,
+  author      = {Koç, Furkan},
+  title       = {Tez başlığı burada yazılır},
+  type        = {Doktora tezi},
+  institution = {Örnek Üniversitesi},
+  year        = {2020},
+  address     = {Ankara},
+  langid      = {turkish}
+}

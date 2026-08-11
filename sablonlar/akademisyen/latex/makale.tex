@@ -1,0 +1,124 @@
+% =====================================================================
+%  MAKALE İSKELETİ — Türkçe akademik makale (XeLaTeX / LuaLaTeX)
+%  Kişisel Zeka Kurulumu · sablonlar/akademisyen/latex/makale.tex
+%
+%  DERLEME (Katman 2 — Tectonic kuruluysa):
+%      powershell -File araclar\belge\tex2pdf.ps1 -Girdi makale.tex
+%  ya da doğrudan:
+%      tectonic makale.tex
+%
+%  ⛔ pdflatex ile DERLEME. Türkçe karakterler için XeLaTeX/LuaLaTeX gerekir
+%     (fontspec, sistem fontları). Tectonic zaten XeTeX tabanlıdır.
+%
+%  DERGİ ŞABLONU VARSA: derginin .cls dosyasını BOZMA. Bu dosyayı kullanma;
+%  onun yerine gövdeni `md2tex.ps1 -Parca` ile üretip derginin şablonuna yapıştır.
+% =====================================================================
+
+\documentclass[12pt,a4paper]{article}
+
+% ---- Türkçe + font (XeLaTeX/LuaLaTeX) -------------------------------
+\usepackage{fontspec}
+\setmainfont{Times New Roman}[
+  % Sistemde Times New Roman yoksa şu satırı kullan (Linux/az fontlu makine):
+  % ] \setmainfont{TeX Gyre Termes}[
+  Ligatures=TeX
+]
+\usepackage{polyglossia}
+\setmainlanguage{turkish}     % tireleme ve "Kaynakça/Şekil/Tablo" başlıkları Türkçe olur
+
+% ---- Sayfa düzeni ---------------------------------------------------
+\usepackage[a4paper,margin=2.5cm,left=3cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing                % 1.5 satır aralığı
+\usepackage{indentfirst}
+\setlength{\parindent}{1.25cm} % ilk satır girintisi
+
+% ---- Sık gereken paketler ------------------------------------------
+\usepackage{graphicx}
+\usepackage{booktabs}          % düzgün tablo çizgileri
+\usepackage{longtable}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=black, citecolor=black, urlcolor=blue}
+
+% ---- Künye ----------------------------------------------------------
+\title{\bfseries Çalışmanın Başlığı Buraya Gelir:\\ Alt Başlık Varsa İki Nokta Sonrası}
+\author{Ad Soyad\thanks{Kurum, Bölüm. E-posta: ornek@ornek.edu.tr}}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% ---- Öz / Abstract --------------------------------------------------
+\begin{abstract}
+\noindent Öz buraya yazılır: çalışmanın amacı, yöntemi, bulguları ve sonucu 150--250
+kelimeyle özetlenir. Öz tek paragraftır, kaynak içermez, kısaltma kullanmaz.
+
+\vspace{0.5em}
+\noindent\textbf{Anahtar Kelimeler:} birinci kelime, ikinci kelime, üçüncü kelime.
+\end{abstract}
+
+% ---- Gövde ----------------------------------------------------------
+\section{Giriş}
+
+Konu buradan başlar. Alanyazına atıf şöyle yapılır \cite{yilmaz2024}; birden çok
+kaynak verilecekse \cite{yilmaz2024,ozturk2023} biçiminde yazılır.
+
+Şekil ve tablolara \textbf{elle numara yazma} --- etiket ver, referansla:
+Tablo~\ref{tbl:ornek} bunun örneğidir.
+
+\section{Yöntem}
+
+Araştırmanın deseni, örneklem, veri toplama araçları ve analiz yöntemi burada anlatılır.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Örnek tablo başlığı (tablo başlığı ÜSTTE olur).}
+  \label{tbl:ornek}
+  \begin{tabular}{lrr}
+    \toprule
+    Değişken & Ortalama & Standart Sapma \\
+    \midrule
+    Birinci ölçüm  & 12,4 & 2,1 \\
+    İkinci ölçüm   & 15,8 & 3,4 \\
+    Üçüncü ölçüm   & 11,2 & 1,9 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Bulgular}
+
+Bulgular yorumsuz sunulur. Sayısal değerlerde Türkçe yazımda ondalık ayırıcı
+\emph{virgül}dür (12,4), binlik ayırıcı noktadır (1.250).
+
+\section{Tartışma ve Sonuç}
+
+Bulgular alanyazınla karşılaştırılır, sınırlılıklar açıkça yazılır, sonraki
+çalışmalara öneri verilir.
+
+% ---- Kaynakça -------------------------------------------------------
+% Bu şablon kaynakçayı BİLEREK elle taşır (thebibliography): tek geçişte,
+% biber/bibtex olmadan derlenir. Tectonic'in standart kipi harici bibliyografya
+% aracı çalıştırmaz — bu yüzden en güvenli yol budur.
+%
+% .bib dosyası kullanmak istersen (Overleaf ya da tam TeX kurulumu varsa):
+%   1) Bu bloğu sil, preamble'a şunu ekle:
+%        \usepackage[style=apa,backend=biber]{biblatex}
+%        \addbibresource{kaynakca.bib}
+%   2) Buraya \printbibliography yaz.
+%   3) Derleme sırası: xelatex → biber → xelatex → xelatex
+% Word/PDF çıktısında .bib kullanmak için LaTeX gerekmez:
+%   md2docx.ps1 -Kaynakca kaynakca.bib -AtifStili apa.csl
+
+\begin{thebibliography}{9}
+
+\bibitem{yilmaz2024}
+Yılmaz, A. (2024). \emph{Belge üretim hatlarında biçim tutarlılığı}. Örnek Yayınevi.
+
+\bibitem{ozturk2023}
+Öztürk, B., \& Şahin, C. (2023). Çok yazarlı bir çalışma başlığı.
+\emph{Örnek Dergi, 12}(3), 45--67. https://doi.org/10.0000/ornek.2023.12345
+
+\end{thebibliography}
+
+\end{document}

@@ -206,7 +206,19 @@ function BasitMarkdownHtml([string[]]$satirlar) {
 }
 
 # ------------------------------------------------------------------ govde uret
-$pandoc = Get-Command pandoc -ErrorAction SilentlyContinue
+function PandocBul {
+  $k = Get-Command pandoc -ErrorAction SilentlyContinue
+  if ($k) { return $k.Source }
+  $adaylar = @(
+    (Join-Path $env:LOCALAPPDATA "Programs\Pandoc\pandoc.exe"),
+    (Join-Path $env:ProgramFiles "Pandoc\pandoc.exe"),
+    (Join-Path ${env:ProgramFiles(x86)} "Pandoc\pandoc.exe")
+  )
+  foreach ($a in $adaylar) { if ($a -and (Test-Path -LiteralPath $a)) { return $a } }
+  return $null
+}
+
+$pandoc = PandocBul
 $govde = $null
 $yontem = ""
 
@@ -215,7 +227,7 @@ if ($pandoc) {
   $gecici = [System.IO.Path]::GetTempFileName()
   $geciciHtml = [System.IO.Path]::ChangeExtension($gecici, ".frag.html")
   Remove-Item -LiteralPath $gecici -Force -ErrorAction SilentlyContinue
-  & $pandoc.Source --from=markdown+pipe_tables+yaml_metadata_block --to=html5 `
+  & $pandoc --from=markdown+pipe_tables+yaml_metadata_block --to=html5 `
       --wrap=none --output="$geciciHtml" "$girdiTam"
   if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath $geciciHtml)) {
     Hata "Pandoc HTML uretemedi (cikis kodu $LASTEXITCODE)."
@@ -299,7 +311,7 @@ $argumanlar = @(
 Bilgi "Donusturucu : $yontem"
 Bilgi "Tarayici    : $tarayici"
 $sure = Measure-Command {
-  $p = Start-Process -FilePath $tarayici -ArgumentList $argumanlar -NoNewWindow -Wait -PassThru
+  Start-Process -FilePath $tarayici -ArgumentList $argumanlar -NoNewWindow -Wait
 }
 Remove-Item -LiteralPath $profil -Recurse -Force -ErrorAction SilentlyContinue
 if (-not $HtmlKalsin) { Remove-Item -LiteralPath $htmlYolu -Force -ErrorAction SilentlyContinue }
