@@ -56,6 +56,35 @@ Birden fazlası uyuyorsa **ana işi** seç; diğerinin klasörleri sonradan ekle
 
 Seçilen profili not et — bundan sonraki her adımda `<PROFİL>` diye anılacak.
 
+### Adım 0b — İkinci bir rol de var mı? (OPSİYONEL)
+
+Bazı kişiler iki işi birden yapar: **akademisyen + yazılım geliştiren**, ya da
+**işletme yöneticisi + İSG dosyasını takip eden** gibi. Kullanıcı Adım 0'da iki seçenek
+arasında kaldıysa **onay kutusuyla** şunu sor:
+
+> **"İkinci bir rolün de var mı? Ana rolün <PROFİL>; ikincisi için ek klasör ve kurallar
+> ekleyebilirim."**
+
+⚠️ **Karma bir profil ÜRETME.** İki `CLAUDE.md`'yi birleştirmek kuralları çelişkiye sokar.
+Doğru yol: **ana profil + ek modül.**
+
+İkinci rol seçilirse (`<EK-ROL>`), Adım 2 ve 3'te şunları **ilave** yap:
+
+1. **Adım 2'ye ek:** `iskelet/<EK-ROL>/` içindeki klasörleri de `<KASA>` köküne kopyala
+   → kasada **9 klasör** olur (5 ortak + 2 ana rol + 2 ek rol).
+2. **Adım 2'ye ek:** `sablonlar/<EK-ROL-KARŞILIĞI>/` dosyalarını da `<KASA>\Sablonlar\`
+   içine kopyala.
+3. **Adım 3'e ek:** `profiller/<EK-ROL>/EK-MODUL.md` dosyasını `<KASA>\EK-ROL.md` olarak
+   kopyala ve `<KASA>\CLAUDE.md` dosyasının **en üstündeki alıntı bloğuna** şu satırı ekle:
+   > **Bu kullanıcının bir de ikinci rolü var — `EK-ROL.md` dosyasını da oku ve uygula.**
+   > Çelişki olursa bu dosya (ana profil) kazanır.
+4. **Adım 4'e ek:** role özel 7. soruyu **iki rol için de** sor.
+5. **Adım 6'ya ek:** klasör sayısı kontrolü **9** olur; Claude'a "kaç klasör var" diye
+   sorduğunda **9** demeli ve **iki rolü de** sayabilmelidir.
+
+Ek rol **sonradan da** eklenebilir: bu beş maddeyi uygulamak yeter, kurulumu baştan yapmak
+gerekmez. Hafıza ve mevcut dosyalar **silinmez.**
+
 ---
 
 ## Adım 1 — Ön koşul kontrolü
@@ -251,7 +280,7 @@ Her maddeyi **fiilen kontrol et**, tahmin etme. Sonucu `KURULUM-KONTROL.md`'ye i
 | # | Kontrol | Nasıl ölçülür |
 |---|---|---|
 | 1 | Kasa doğru yerde | `<KASA>\CLAUDE.md` var (alt klasörde değil, **kökte**) |
-| 2 | Klasör yapısı tam | `<KASA>` içinde tam **7 klasör** var |
+| 2 | Klasör yapısı tam | `<KASA>` içinde tam **7 klasör** var (Adım 0b'de ek rol seçildiyse **9**) |
 | 3 | Kurallar okunuyor | Claude'a "klasör haritasında kaç klasör var" → **"7"** demeli |
 | 4 | Rol doğru yüklü | Claude'a "benim rolüm ne" → doğru rolü söylemeli |
 | 5 | Yazma çalışıyor | Claude bir dosya yazdı, dosya diskte görüldü |
@@ -382,10 +411,10 @@ LICENSE                    → MIT
 
 profiller/
   _ortak.md                → her profilde aynı olan çekirdek kurallar → kasada CEKIRDEK.md
-  isg-uzmani/CLAUDE.md
-  akademisyen/CLAUDE.md
-  genel/CLAUDE.md
-  yazilimci/CLAUDE.md
+  isg-uzmani/CLAUDE.md     + EK-MODUL.md   (ana profil + ikincil rol modülü)
+  akademisyen/CLAUDE.md    + EK-MODUL.md
+  genel/CLAUDE.md          + EK-MODUL.md
+  yazilimci/CLAUDE.md      + EK-MODUL.md
 
 iskelet/
   _ortak/                  → her kasaya kopyalanan ortak yapı
