@@ -17,9 +17,34 @@ asla buraya geri gönderilmez. Katkı verecekler için ayrıntı: [`KATKI.md`](K
 
 Editörde (Antigravity / VS Code) Claude panelini aç ve şunu yaz:
 
-> **"Şu depoyu klonla: `<DEPO ADRESİ>` — sonra içindeki README.md'yi oku ve kurulumu yap."**
+> **"Şu depoyu klonla: `https://github.com/HAVSAN/aklera-zeka-kurulum` — sonra içindeki
+> README.md'yi oku ve kurulumu yap."**
 
 Gerisini Claude yapar. Sana **birkaç soru** soracak; onlara cevap ver, yeter.
+
+### ⚠️ Bilgisayarda `git` yoksa — önce bunu yaz
+
+Depoyu çekmek için `git` gerekiyor ve yeni bir bilgisayarda genelde kurulu **değildir**.
+Claude paneline şunu yaz:
+
+> **"Bu bilgisayarda git kurulu değil. Önce git'i kur:
+> `winget install --id Git.Git -e --source winget`
+> Kurulum bitince yeni bir terminal aç (PATH tazelensin), sonra
+> `https://github.com/HAVSAN/aklera-zeka-kurulum` deposunu `C:\` altına klonla,
+> README.md'yi oku ve kurulumu yap."**
+
+**git kurulamıyorsa** (winget yok, yetki yok, kurumsal engel) — git'siz yol:
+
+> **"git kurulamıyor. Bunun yerine depoyu ZIP olarak indir ve aç:
+> `https://github.com/HAVSAN/aklera-zeka-kurulum/archive/refs/heads/main.zip`
+> Açtıktan sonra README.md'yi oku ve kurulumu yap."**
+
+ZIP yolu çalışır (depo herkese açık), tek farkı: ileride güncelleme için `git pull` yerine
+ZIP'i yeniden indirmek gerekir. **Mümkünse git'i kur** — güncellemeler tek komutla gelir.
+
+> 📌 *Bu blok 11.08.2026'daki ilk canlı kurulumda eklendi: README'yi yazan taraf git'in kurulu
+> olduğunu varsaymıştı, ilk kullanıcının makinesinde yoktu. Kurulum talimatı daima **en boş
+> makineyi** varsayar.*
 
 ---
 

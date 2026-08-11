@@ -76,3 +76,15 @@ Kurulum tek başına yetmez; sistem **kullanılmazsa ölür.**
 | Tarih | Kişi | Profil | Süre | Not |
 |---|---|---|---|---|
 | | | | | |
+
+---
+
+## Canli kurulum bulgulari
+
+### 11.08.2026 — 1. kurulum (ISG uzmani profili)
+
+| # | Bulgu | Etki | Durum |
+|---|---|---|---|
+| B-01 | **git kurulu degildi** — README "depoyu klonla" ile basliyordu ama git yoksa depoya hic ulasilamiyor (tavuk-yumurta). | Kurulum ilk komutta durur | ✅ **Duzeltildi** — README basina "git yoksa once bunu yaz" blogu + ZIP alternatifi eklendi |
+| B-02 | `<DEPO ADRESI>` yer tutucusu README icinde doldurulmamisti. | Kullanici hangi adresi yazacagini bilemez | ✅ **Duzeltildi** — gercek URL yazildi |
+
