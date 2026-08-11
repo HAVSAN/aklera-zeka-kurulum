@@ -294,6 +294,11 @@ karşılaşmamalı. Ama **silme ve geri alınamaz işlemler daima sorulmalı.**
    `permissions.deny` girdilerini **birleştir** (mevcut girdiler korunur), `defaultMode`
    yoksa ekle. Sonucun geçerli JSON olduğunu doğrula.
 3. Ayar dosyası **oturum başında** okunur — değişiklik sonrası **yeni sohbet** açılmalıdır.
+4. **Profil `yazilimci` ise** (yalnız o profilde): `ayarlar/settings-yazilimci-ek.json`
+   dosyasının `permissions.allow` ve `permissions.deny` girdilerini de **aynı dosyaya
+   birleştir**. Bu katman geliştirme komutlarını açar (`dotnet test`, `npm`, dal işlemleri,
+   `git push`) ve canlı sisteme elle dokunmayı kapatır (`ssh`, `docker`, `psql`).
+   Belge profillerinde (`isg-uzmani`, `akademisyen`, `genel`) bu dosya **kurulmaz.**
 
 Neyin niye orada olduğu ve öncelik sırası (`deny` → `ask` → `allow`):
 [`ayarlar/NEDIR.md`](ayarlar/NEDIR.md).
@@ -558,7 +563,9 @@ açıp Türkçe denetim satırını gördü.
 | Klasör sayısı 6 değil | `_ortak` ya da role özel iskelet eksik/çift kopyalanmış; ya da `hafiza/` yanlışlıkla kasaya kopyalanmış | Adım 2.3–2.4'ü kontrol et; `<KASA>\_ortak\` oluştuysa içindekileri köke taşı, boşu sil; `<KASA>\memory\` ve `<KASA>\hafiza\` varsa **sil** |
 | Her dosya düzenlemesinde izin soruyor (e testi) | `settings.json` yok ya da `defaultMode` ayarlanmamış | Adım 3b. Değişiklikten sonra **yeni sohbet** aç — ayar oturum başında okunur |
 | Silme işlemi sormadan yapılıyor (f testi) | `deny` listesi eksik ya da `bypassPermissions` kullanılmış | `ayarlar/settings-sablon.json`'daki `deny` listesini geri koy; `bypassPermissions` **kullanma** |
-| Asistan süre tahmini vermiyor (d testi) | Kural dosyası eski sürüm | Depoyu güncelle (`git pull`), Adım 3.1'i tekrarla |
+| Asistan süre tahmini vermiyor (d testi) | Kural dosyası eski sürüm | `git pull` + `powershell -ExecutionPolicy Bypass -File araclar\kur.ps1 -Guncelle` (künyeni ve kendi satırlarını korur), sonra **yeni sohbet** |
+| Kurulu sürümün ne olduğu bilinmiyor | Kural dosyasında sürüm marker'ı yok (1.1.0 öncesi kurulum) | `kur.ps1 -Guncelle` bir kez koşar, **benimseme** turuyla marker'ı basar. Önce `-KuruKosu` ile ne değişeceğine bak |
+| Güncelleme kendi eklediğim satırları sildi | `kur.ps1` yerine dosya elle ezilmiş | Yedekten dön (`CLAUDE.md.yedek-<surum>`), kendi satırlarını `KENDI-EKLERIN` blokunun içine taşı — o blok hiçbir güncellemede değişmez |
 | Claude paneli boş / "sign in" diyor | Eklenti oturumu yok | Panelden giriş yap, tarayıcıda doğrulamayı tamamla |
 | Claude dosyaya yazamıyor, izin döngüsüne giriyor | Klasöre güven verilmemiş | Editörü kapat, tekrar aç, "Yes, I trust the authors" de |
 | `C:\` altına klasör açılmıyor | Yönetici yetkisi yok | Kasayı `C:\Users\<kullanıcı>\<Ad>` yap ve **tüm dosyalardaki yol referanslarını** güncelle |
@@ -594,6 +601,8 @@ profiller/                 → ↓ BİRLEŞTİRİLİP %USERPROFILE%\.claude\CLAU
 
 ayarlar/                   → ↓ %USERPROFILE%\.claude\settings.json olur
   settings-sablon.json     → oto mod (acceptEdits) + allow/deny listeleri
+  settings-yazilimci-ek.json → YALNIZ yazilimci profilinde: geliştirme komutları açılır,
+                               canlıya elle dokunma (ssh/docker/psql) kapatılır
   NEDIR.md                 → hangi anahtar ne yapar, öncelik sırası
 
 hafiza/                    → ↓ %USERPROFILE%\.claude\projects\<proje>\memory\ olur
@@ -610,8 +619,14 @@ sablonlar/
 istemler/
   isg.md  genel.md  akademisyen.md  yazilimci.md
 
+SURUM                      → deponun sürümü (tek kaynak). Kurulu sürüm CLAUDE.md marker'ında yazar
+DEGISIKLIKLER.md           → hangi sürümde ne değişti, neden
+
 araclar/
+  kur.ps1 -Guncelle        → kurulu makineyi depodaki sürüme tazeler; künye ve KENDİ
+                             eklediğin satırlar korunur (-KuruKosu ile önce dene)
   kurulum-dogrula.ps1      → kurulumun ÇALIŞTIĞINI ölçer, geçmezse çıkış kodu 1
+                             (sürüm geride mi, onu da söyler)
   belge/                   → Adım 7'nin (opsiyonel) belge çıktı hattı
     md2pdf.ps1             → Markdown → PDF   (kurulum gerektirmez)
     md2docx.ps1            → Markdown → Word  (Pandoc)

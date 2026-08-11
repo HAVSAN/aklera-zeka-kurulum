@@ -19,7 +19,11 @@ param(
     [switch]$EkRol,
 
     # Hafiza dizini otomatik bulunamazsa elle verilir.
-    [string]$HafizaDizini = ""
+    [string]$HafizaDizini = "",
+
+    # Olculecek ayar dizini. Varsayilan: %USERPROFILE%\.claude
+    # Sahte bir kurulum uzerinde deneme yaparken gercek kurulumu olcmesin diye yonlendirilir.
+    [string]$AyarDizini = ""
 )
 
 $ErrorActionPreference = "Stop"
@@ -39,7 +43,7 @@ function Sonuc {
 }
 
 $Profil = $env:USERPROFILE
-$ClaudeDizin = Join-Path $Profil ".claude"
+$ClaudeDizin = if ($AyarDizini -ne "") { $AyarDizini } else { Join-Path $Profil ".claude" }
 $KuralDosyasi = Join-Path $ClaudeDizin "CLAUDE.md"
 $AyarDosyasi = Join-Path $ClaudeDizin "settings.json"
 $ProjelerDizin = Join-Path $ClaudeDizin "projects"
@@ -67,10 +71,33 @@ if ($kuralVar) {
     $cekirdekIzi = ($kural -match "Ortak .ekirdek" -or $kural -match "Sen kimsin")
     $profilIzi = ($kural -match "role .zg" -or $kural -match "Kiminle .al")
     Sonuc "Cekirdek + profil TEK dosyada birlesik" ($cekirdekIzi -and $profilIzi) "ayri CEKIRDEK.md otomatik yuklenmez"
+
+    # 2b -- SURUM KONTROLU: kurulu surum ile depo surumu ayni mi?
+    # Depo yolu betigin kendi konumundan bulunur (araclar\ -> depo koku).
+    $depoKok = Split-Path -Parent $PSScriptRoot
+    $surumDosyasi = Join-Path $depoKok "SURUM"
+    $depoSurum = ""
+    if (Test-Path $surumDosyasi) {
+        $depoSurum = (Get-Content $surumDosyasi -Raw -Encoding UTF8).Trim()
+    }
+    $kuruluSurum = ""
+    $m = [regex]::Match($kural, "HAVSAN-KURULUM:BASLANGIC[^>]*surum=([^\s>]+)")
+    if ($m.Success) { $kuruluSurum = $m.Groups[1].Value }
+
+    if ($depoSurum -eq "") {
+        Sonuc "Surum karsilastirmasi yapilabildi" $false "depoda SURUM dosyasi yok -- depo eski, `git pull` kos"
+    } elseif ($kuruluSurum -eq "") {
+        Sonuc "Kurulu surum okunabiliyor" $false ("kural dosyasinda surum marker'i YOK (surum kavramindan onceki kurulum). Cozum: araclar\kur.ps1 -Guncelle  [depo surumu: " + $depoSurum + "]")
+    } elseif ($kuruluSurum -ne $depoSurum) {
+        Sonuc "Kurulu surum depo ile ayni" $false ("kurulu " + $kuruluSurum + " , depo " + $depoSurum + " -- GERIDE. Cozum: git pull; sonra araclar\kur.ps1 -Guncelle")
+    } else {
+        Sonuc "Kurulu surum depo ile ayni" $true ("surum " + $kuruluSurum)
+    }
 } else {
     Sonuc "Kullanici Kunyesi bolumu var" $false "kural dosyasi yok"
     Sonuc "Kunye yer tutuculari dolduruldu" $false "kural dosyasi yok"
     Sonuc "Cekirdek + profil TEK dosyada birlesik" $false "kural dosyasi yok"
+    Sonuc "Kurulu surum depo ile ayni" $false "kural dosyasi yok"
 }
 
 # 3 -- settings.json / oto mod

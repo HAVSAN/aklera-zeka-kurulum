@@ -51,3 +51,41 @@ Bir dosyayı eklemeden önce içinde ara: firma adı, kişi adı, `@` işareti, 
 
 Değişikliğin **hangi kurulum deneyiminden** çıktığını tek cümleyle yaz. Bu depo teoriden
 değil, gerçek kurulumlardan büyür.
+
+---
+
+## Kendi kurulumunda geliştirdiğin bir şeyi depoya taşımak
+
+Bu deponun kaynağı, **bakımını yapan kişinin kendi `~/.claude` kurulumudur.** Orada bir kural,
+bir alışkanlık ya da bir betik olgunlaşınca depoya süzülür. Elle kopyalama değil, **süzme**:
+her şey genel değildir.
+
+### Neyin genel olduğuna karar verme tablosu
+
+| Kaynak | Depoya girer mi | Neden |
+|---|---|---|
+| Davranış kuralı ("testi koşmadan iş bitmez", "boru hattı çıkış kodunu maskeler") | ✅ **evet** — `profiller/_ortak.md` ya da ilgili profil | Kişiden bağımsız, herkeste aynı işe yarar |
+| İzin listesi girdisi (yeni bir komutun `allow`/`deny` karşılığı) | ✅ evet — `ayarlar/settings-sablon.json` ya da profil ek katmanı | Aynı sorun herkeste çıkar |
+| Yeni bir araç betiği (genel amaçlı) | ✅ evet — `araclar/` | Tek makineye özel değilse |
+| Şablon / istem kartı | ✅ evet | Boş kalıp olmak şartıyla |
+| **Kişisel hafıza notları** (`memory/*.md`) | ⛔ **asla** | Kişinin kendi bilgisi; çoğu kez kurum/kişi adı taşır |
+| **Künye tablosu** (rol, kurum, kasa yolu) | ⛔ asla | Kişiye özel; kurulumda röportajla dolar |
+| İş takip dosyaları (gol/pas, kokpit, plan durumu) | ⛔ asla | Bir ekibin iç işleyişi; depo kullanıcısını ilgilendirmez |
+| Firma/müşteri adı geçen her satır | ⛔ asla | Depo public olabilir (yukarıdaki tablo) |
+| Tek makineye özel yollar (`C:\Repos\...`) | ⛔ asla | `[DEPO YOLU]` gibi yer tutucuya çevir |
+
+### Sıra
+
+1. **Ayıkla:** kuralı kendi dosyandan al, kişiye/kuruma ait her izi çıkar, örnekleri anonimleştir.
+2. **Doğru katmana koy:** her profilde geçerliyse `_ortak.md`, tek role özgüyse profil dosyası.
+   Aynı kuralı iki yere yazma — ikincisi bayatlar.
+3. **`DEGISIKLIKLER.md`'ye satır ekle** ve `SURUM` dosyasını yükselt
+   (davranış değişiyorsa ikinci hane, yalnız düzeltmeyse üçüncü hane).
+4. **Kendi makinende dene:** sahte bir kurulum dizini aç ve
+   `araclar\kur.ps1 -Guncelle -HedefDizin <sahte-dizin> -KuruKosu` koş — gerçek kurulumunu
+   bozmadan ne değişeceğini görürsün.
+5. Commit + push. Ekipteki herkes `git pull` + `kur.ps1 -Guncelle` ile aynı sürüme gelir.
+
+⚠️ **Depoya yazıp kendi kurulumunu güncellemeyi unutma** (ya da tersi): iki taraf ayrışırsa
+"bende çalışıyor" sınıfı hatalar başlar. `kurulum-dogrula.ps1` sürüm karşılaştırmasıyla bunu
+söyler.
