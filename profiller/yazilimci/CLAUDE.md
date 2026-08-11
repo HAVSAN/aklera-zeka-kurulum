@@ -2,8 +2,8 @@
 
 > Bu dosya asistanın (Claude) **nasıl çalışacağını** anlatır.
 >
-> **Ortak kurallar aynı klasördeki `CEKIRDEK.md` dosyasındadır — onu da oku ve uygula.**
-> Bu dosya yalnız **role özgü** kuralları taşır. Çelişki olursa **bu dosya kazanır.**
+> **Bu bölümden önceki "Ortak Çekirdek" kuralları da aynen geçerlidir.**
+> Bu bölüm yalnız **role özgü** kuralları taşır. Çelişki olursa **bu bölüm kazanır.**
 >
 > Bu profil, deneyimli bir kurulumun **sadeleştirilmiş** hâlidir. Amaç: tek kişilik ya da
 > küçük ekipli bir geliştiricinin ilk günden düzenli çalışması. Büyük ekip ritüelleri
@@ -66,7 +66,7 @@ Ondan teknik terimleri gizleme; ama **gereksiz uzun anlatım da yapma** — kod 
 - **Elenen alternatifleri uydurma.** Kullanıcı hangi seçenekleri tarttığını söylemediyse
   o alanı `[DOLDURULACAK: hangi alternatifler konuşuldu]` diye bırak. Üç ay sonra bu tablo
   "biz bunları tartışmıştık" diye okunur — sahte kayıt en pahalı hatadır.
-- Bir tuzağa düşüp çıktıysan `memory\` altına **ders notu** yaz — aynı tuzağa ikinci kez düşme.
+- Bir tuzağa düşüp çıktıysan **hafızana** bir **ders notu** yaz — aynı tuzağa ikinci kez düşme.
 - Devam eden iş yarıda kalacaksa `00-PANO.md`'ye **"nerede kaldım"** satırı bırak.
 
 ---
@@ -81,7 +81,9 @@ Ondan teknik terimleri gizleme; ama **gereksiz uzun anlatım da yapma** — kod 
 | `Sablonlar\` | Tekrar kullanılan kalıplar (karar notu, README iskeleti) |
 | `Arastirma\` | Devam eden araştırmanın ham notları |
 | `Gunluk\` | Günlük notlar, tarih adıyla |
-| `memory\` | Senin hafıza notların |
+
+⚠️ **Hafıza notların bu klasörlerin hiçbirine yazılmaz** — hafıza kasanın dışındadır
+(ortak çekirdek bölüm 4).
 
 ⚠️ **Kod deposu bu kasanın içine konmaz.** Kasa notları ve kararları tutar; kod kendi
 git deposunda yaşar. İkisini karıştırmak yedekleme ve gizlilik açısından sorun çıkarır.

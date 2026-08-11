@@ -103,6 +103,7 @@ Write-Host ""
 Write-Host "Katman 1 - Pandoc ile Word/LaTeX kaynagi" -ForegroundColor White
 $pandoc = AraclarBul "pandoc" @(
   (Join-Path $env:LOCALAPPDATA "Programs\Pandoc\pandoc.exe"),
+    (Join-Path $env:LOCALAPPDATA "Pandoc\pandoc.exe"),
   (Join-Path $env:ProgramFiles "Pandoc\pandoc.exe")
 )
 if (-not $pandoc) {

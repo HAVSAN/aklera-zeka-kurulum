@@ -7,11 +7,16 @@ tarih: [KURULUM TARİHİ]
 
 # Hafıza İndeksi
 
-> Asistan **her sohbetin başında** bu dosyayı okur. Buradaki her satır `memory\` klasöründeki
-> bir nota bağlıdır. Yeni bir şey öğrenildiğinde önce `memory\` altına dosya yazılır,
-> sonra buraya **tek satır** eklenir.
->
-> ⚠️ Buraya kişisel/hassas veri yazılmaz (bkz. `CEKIRDEK.md` bölüm 7).
+> ⚠️ **Bu dosya kasaya değil, kullanıcının hafıza dizinine kopyalanır:**
+> `%USERPROFILE%\.claude\projects\<proje>\memory\MEMORY.md`
+> Claude Code bu indeksi **her sohbetin başında kendiliğinden yükler.** Kasadaki bir
+> `MEMORY.md` yüklenmez — 11.08.2026'da tam bu yüzden hafıza hiç okunmadı.
+
+Buradaki her satır aynı klasördeki bir nota bağlıdır. Yeni bir şey öğrenildiğinde önce
+o klasöre bir dosya yazılır, sonra buraya **tek satır** eklenir. İndekse girmeyen not
+bir daha bulunmaz.
+
+⚠️ Buraya kişisel/hassas veri yazılmaz (bkz. çalışma kurallarının "Gizlilik" bölümü).
 
 ## Kullanıcı · çalışma tarzı ve tercihleri
 - _(kurulumdaki tanışma röportajında yazılacak — profil notu buraya bağlanır)_

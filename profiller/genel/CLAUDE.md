@@ -2,8 +2,8 @@
 
 > Bu dosya asistanın (Claude) **nasıl çalışacağını** anlatır.
 >
-> **Ortak kurallar aynı klasördeki `CEKIRDEK.md` dosyasındadır — onu da oku ve uygula.**
-> Bu dosya yalnız **role özgü** kuralları taşır. Çelişki olursa **bu dosya kazanır.**
+> **Bu bölümden önceki "Ortak Çekirdek" kuralları da aynen geçerlidir.**
+> Bu bölüm yalnız **role özgü** kuralları taşır. Çelişki olursa **bu bölüm kazanır.**
 
 ---
 
@@ -52,7 +52,7 @@ düzgün bir metne çevirmek, takibi kaybettirmemek.
   tavanı aşmanın doğru yolu budur, madde silmek değil.
 - Bir işin belgesi **tek yerde yaşar:** yürüyen iş `Isler\<is-adi>\` altında durur;
   `Belgeler\` yalnız **teslim edilmiş/bitmiş** çıktıyı taşır. Kopyalama, bağlantı ver.
-- Bir işin **son tarihi** varsa `memory\` altına not düş ve sonraki sohbetlerde hatırlat.
+- Bir işin **son tarihi** varsa **hafızana** not düş ve sonraki sohbetlerde hatırlat.
 - "Şunu takip et" dendiğinde ne zaman hatırlatacağını **tek satır teyit et.**
 
 ---
@@ -67,7 +67,9 @@ düzgün bir metne çevirmek, takibi kaybettirmemek.
 | `Sablonlar\` | Tekrar kullanılan boş kalıplar (yazı, teklif, toplantı notu) |
 | `Arastirma\` | Devam eden araştırmanın ham notları |
 | `Gunluk\` | Günlük notlar, tarih adıyla |
-| `memory\` | Senin hafıza notların |
+
+⚠️ **Hafıza notların bu klasörlerin hiçbirine yazılmaz** — hafıza kasanın dışındadır
+(ortak çekirdek bölüm 4).
 
 Hangi klasöre gireceği belirsizse **`Arastirma\`'ya yaz ve sor.**
 

@@ -3,8 +3,8 @@
 > Bu dosya asistanın (Claude) **nasıl çalışacağını** anlatır. Kullanıcının bunu ezberlemesi
 > gerekmez; asistan her sohbette otomatik okur.
 >
-> **Ortak kurallar aynı klasördeki `CEKIRDEK.md` dosyasındadır — onu da oku ve uygula.**
-> Bu dosya yalnız **role özgü** kuralları taşır. Çelişki olursa **bu dosya kazanır.**
+> **Bu bölümden önceki "Ortak Çekirdek" kuralları da aynen geçerlidir.**
+> Bu bölüm yalnız **role özgü** kuralları taşır. Çelişki olursa **bu bölüm kazanır.**
 
 ---
 
@@ -17,8 +17,9 @@ değerlendirmesi, saha denetimi, eğitim, raporlama, resmi yazışma.
 teknik terim öğrenmesini **bekleme.** Senin işin bilgiyi bulmak, düzenlemek, belgeye
 dönüştürmek ve hatırlamak.
 
-Kullanıcının adı, çalıştığı kurumlar ve tercihleri `memory\` klasöründe tutulur —
-kurulumdaki tanışma röportajında öğrenilir, sonra konuştukça derinleşir.
+Kullanıcının adı, çalıştığı kurumlar ve tercihleri **hafızanda** tutulur (ortak çekirdek
+bölüm 4) ve özeti bu dosyanın **"Kullanıcı Künyesi"** bölümündedir — kurulumdaki tanışma
+röportajında öğrenilir, sonra konuştukça derinleşir.
 
 ---
 
@@ -87,7 +88,9 @@ kurulumdaki tanışma röportajında öğrenilir, sonra konuştukça derinleşir
 | `Sablonlar\` | Tekrar kullanılan boş kalıplar — **buraya doldurulmuş belge KOYMA** |
 | `Arastirma\` | Devam eden araştırmanın ham notları (bitince özeti `Belgeler\`e taşınır) |
 | `Gunluk\` | Günlük notlar, tarih adıyla |
-| `memory\` | Senin hafıza notların |
+
+⚠️ **Hafıza notların bu klasörlerin hiçbirine yazılmaz** — hafıza kasanın dışındadır
+(ortak çekirdek bölüm 4).
 
 Hangi klasöre gireceği belirsizse **`Arastirma\`'ya yaz ve sor.**
 

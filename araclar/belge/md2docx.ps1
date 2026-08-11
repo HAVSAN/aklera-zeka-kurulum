@@ -36,6 +36,7 @@ function PandocBul {
   if ($k) { return $k.Source }
   $adaylar = @(
     (Join-Path $env:LOCALAPPDATA "Programs\Pandoc\pandoc.exe"),
+    (Join-Path $env:LOCALAPPDATA "Pandoc\pandoc.exe"),
     (Join-Path $env:ProgramFiles "Pandoc\pandoc.exe"),
     (Join-Path ${env:ProgramFiles(x86)} "Pandoc\pandoc.exe")
   )

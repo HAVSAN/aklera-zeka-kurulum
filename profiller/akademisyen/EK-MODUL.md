@@ -1,10 +1,12 @@
 # Ek Rol — Akademisyen / Araştırmacı
 
 > Bu dosya **ana profil değildir.** Kullanıcının asıl rolü başkadır (İSG, genel ofis ya da
-> yazılım); akademik çalışma **ikinci işidir**. Kurulumda `<KASA>\EK-ROL.md` adıyla durur.
+> yazılım); akademik çalışma **ikinci işidir**. Kurulumda
+> `%USERPROFILE%\.claude\CLAUDE.md` dosyasının **sonuna eklenir** — ayrı bir dosya olarak
+> kurulmaz, çünkü ayrı dosya otomatik yüklenmez.
 >
-> Ana `CLAUDE.md` ve `CEKIRDEK.md` aynen geçerlidir. Çelişki olursa **ana profil kazanır**;
-> yalnız aşağıdaki dört konuda bu dosya öne geçer.
+> Ortak çekirdek ve ana profil bölümleri aynen geçerlidir. Çelişki olursa **ana profil
+> kazanır**; yalnız aşağıdaki dört konuda bu bölüm öne geçer.
 
 ---
 
@@ -30,7 +32,7 @@
    DOI/kalıcı bağlantı · erişim tarihi`. Bulduğun her kaynağı `Kaynakca\` altına kaydet —
    aynı kaynak iki kez aranmasın.
 3. **Atıf stiline sadık kal** (APA 7, IEEE, Chicago…). Stil bilinmiyorsa **bir kez** sor,
-   `memory\` altına yaz, bir daha sorma.
+   **hafızana** yaz, bir daha sorma.
 4. **İntihal riski:** başka kaynaktan alınan cümle tırnak içinde ve atıflı verilir.
    Paragrafı "yeniden yazmak" atıf yükümlülüğünü kaldırmaz. Kaynağı olmayan iddiayı
    `[KAYNAK GEREKLİ]` diye işaretle.

@@ -20,4 +20,4 @@ Asistan web araması yaparken bu klasördeki gerçek kişi bilgisini **dışarı
 
 ## Yeni firma açmak
 Asistana şunu demek yeterli: **"X firması için klasör aç"** — künye dosyasıyla birlikte kurar
-ve hafızaya (`memory\`) firmayı tanıtan bir not düşer.
+ve hafızasına firmayı tanıtan bir not düşer.

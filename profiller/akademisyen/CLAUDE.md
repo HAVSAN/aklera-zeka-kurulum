@@ -2,8 +2,8 @@
 
 > Bu dosya asistanın (Claude) **nasıl çalışacağını** anlatır.
 >
-> **Ortak kurallar aynı klasördeki `CEKIRDEK.md` dosyasındadır — onu da oku ve uygula.**
-> Bu dosya yalnız **role özgü** kuralları taşır. Çelişki olursa **bu dosya kazanır.**
+> **Bu bölümden önceki "Ortak Çekirdek" kuralları da aynen geçerlidir.**
+> Bu bölüm yalnız **role özgü** kuralları taşır. Çelişki olursa **bu bölüm kazanır.**
 
 ---
 
@@ -29,7 +29,7 @@ betikleridir. Öncelik daima **metin, kaynak ve doğruluk**tur.
   erişim tarihi`
 - Emin olmadığın künyeyi **`[DOĞRULANMALI: ...]`** işaretiyle yaz, sessizce geçme.
 - Kullanıcının belirttiği **atıf stiline** (APA 7, IEEE, Chicago, Vancouver…) sadık kal.
-  Stil bilinmiyorsa bir kez sor, öğrendiğini `memory\` altına yaz, bir daha sorma.
+  Stil bilinmiyorsa bir kez sor, öğrendiğini **hafızana** yaz, bir daha sorma.
 - Bulduğun her kaynağı `Kaynakca\` altına künyesiyle kaydet — aynı kaynak iki kez aranmasın.
 - **İkincil atıf yapma:** "X'in aktardığına göre Y" diyorsan bunu açıkça belirt.
 
@@ -78,7 +78,9 @@ betikleridir. Öncelik daima **metin, kaynak ve doğruluk**tur.
 | `Sablonlar\` | Makale iskeleti, literatür tarama formu, hakem yanıtı kalıbı |
 | `Arastirma\` | Devam eden okuma notları, henüz yerleşmemiş fikirler |
 | `Gunluk\` | Günlük notlar, tarih adıyla |
-| `memory\` | Senin hafıza notların |
+
+⚠️ **Hafıza notların bu klasörlerin hiçbirine yazılmaz** — hafıza kasanın dışındadır
+(ortak çekirdek bölüm 4).
 
 Hangi klasöre gireceği belirsizse **`Arastirma\`'ya yaz ve sor.**
 
@@ -98,7 +100,7 @@ Bu üç adım yapılmadan hiçbir künye `Kaynakca\` altına girmez.
 
 ## 5. Hafızaya mutlaka yazılacaklar
 
-Ortak çekirdek bölüm 4'e ek olarak bu profilde şunlar öğrenilir öğrenilmez `memory\` altına yazılır:
+Ortak çekirdek bölüm 4'e ek olarak bu profilde şunlar öğrenilir öğrenilmez **hafızana** yazılır:
 
 - Kullanılan **atıf stili** ve dergi tercihleri
 - Araştırma alanı, anahtar kelimeler, sık taranan veri tabanları

@@ -27,8 +27,8 @@ Bu karar hangi durumda yeniden açılır.
 
 ## Kural
 - Bir karar **değiştiğinde eski not silinmez**, `durum: degisti` yapılır ve yeni nota bağlanır.
-- Tuzağa düşüp çıktıysan notu buraya değil `memory\` altına **ders** olarak yaz —
-  asistan onu her sohbette okur.
+- Tuzağa düşüp çıktıysan notu buraya değil **asistanın hafızasına** ders olarak yazdır
+  ("bunu ders olarak not al") — hafızayı her sohbette okur.
 
 ## Dosya adı biçimi
 `YYYY-AA-GG-karar-kisa-ad.md`

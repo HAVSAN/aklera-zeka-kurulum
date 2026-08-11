@@ -2,10 +2,11 @@
 
 > Bu dosya **ana profil değildir.** Kullanıcının asıl rolü başkadır; İSG/mevzuat işi
 > **ikinci işidir** (örn. işletme sahibi ya da yönetici, aynı zamanda İSG dosyasını takip
-> ediyor). Kurulumda `<KASA>\EK-ROL.md` adıyla durur.
+> ediyor). Kurulumda `%USERPROFILE%\.claude\CLAUDE.md` dosyasının **sonuna eklenir** —
+> ayrı bir dosya olarak kurulmaz, çünkü ayrı dosya otomatik yüklenmez.
 >
-> Ana `CLAUDE.md` ve `CEKIRDEK.md` aynen geçerlidir. Çelişki olursa **ana profil kazanır**;
-> yalnız aşağıdaki dört konuda bu dosya öne geçer.
+> Ortak çekirdek ve ana profil bölümleri aynen geçerlidir. Çelişki olursa **ana profil
+> kazanır**; yalnız aşağıdaki dört konuda bu bölüm öne geçer.
 
 ---
 

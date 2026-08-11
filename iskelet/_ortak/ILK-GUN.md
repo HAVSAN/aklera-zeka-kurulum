@@ -25,7 +25,7 @@ Masaüstündeki çalışma klasörü kısayolunun yanında iki program var:
 ## İlk gün deneyin
 
 Kurulum sırasında asistan bu bölüme **size özel 5 örnek istem** ekledi.
-Yoksa `istemler\` klasöründeki kartlara bakın ya da asistana şunu yazın:
+Boşsa asistana şunu yazın:
 
 > "Benim işime uygun 5 örnek istem yaz ve bu dosyaya ekle."
 
@@ -55,8 +55,12 @@ Asistanın bir **hafızası** var. Ona bir tercihinizi söylediğinizde, bir dah
 > **"Beni şu konuda hatırla: raporları hep şu sırayla istiyorum."**
 > **"Bunu not al: şu kurumda irtibat kişisi şu."**
 
-Bunları `memory\` klasörüne yazar ve **her yeni sohbette baştan okur.** Zamanla sizin çalışma
+Bunları hafızasına yazar ve **her yeni sohbette baştan okur.** Zamanla sizin çalışma
 tarzınıza göre şekillenir.
+
+> Hafıza çalışma klasörünüzün içinde değil, Claude'un kendi ayar dizinindedir — sistemin
+> onu kendiliğinden yüklediği tek yer orasıdır. Sizin oraya bakmanız gerekmez;
+> merak ederseniz **"hafızanda benimle ilgili ne yazıyor?"** diye sorun, listeler.
 
 Yanlış bir şey öğrendiyse **"bunu unut / şöyle düzelt"** demeniz yeterli.
 

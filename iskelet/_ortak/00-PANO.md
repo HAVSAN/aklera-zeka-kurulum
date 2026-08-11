@@ -8,7 +8,7 @@
 ## Bugün
 - [ ] Sistemi tanı — `ILK-GUN.md` dosyasındaki örnek istemlerden birini dene
 - [ ] Asistana kendini tanıt (kurulumda yapılmadıysa): ne iş yapıyorsun, nasıl çalışmayı
-      seversin — asistan bunu `memory\` klasörüne kaydeder
+      seversin — asistan bunu hafızasına kaydeder, bir daha anlatman gerekmez
 
 ## Bekleyen
 - (henüz yok)

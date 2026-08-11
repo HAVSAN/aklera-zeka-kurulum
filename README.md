@@ -11,6 +11,17 @@ Bu depoya **hiçbir sır, müşteri verisi, gerçek firma/kişi adı, iç doküm
 içerik girmez.** Buradaki her örnek anonimdir. Kurulan kişinin kendi kasası **ayrı ve özeldir**,
 asla buraya geri gönderilmez. Katkı verecekler için ayrıntı: [`KATKI.md`](KATKI.md).
 
+## ⛔ KURULUM YAPMADAN ÖNCE — operatör kuralı
+
+**Bir kişiye kurulum yapmadan önce bu depo temiz bir makinede bir kez baştan sona koşmuş ve
+Adım 6'daki (a)–(g) davranış testlerini geçmiş olmalıdır.** Depo değiştiyse bu prova
+yeniden yapılır.
+
+Sebep: 11.08.2026'daki ilk canlı kurulumda bütün dosyalar eksiksiz yazıldı, doğrulama listesi
+baştan sona geçti ve **sistem yine de çalışmadı** — dosyalar Claude'un okumadığı bir konuma
+kurulmuştu. "Dosya var mı" sorusu bunu yakalayamaz; yalnız davranış testi yakalar.
+Ayrıntı: [`KURULUM-KONTROL.md`](KURULUM-KONTROL.md) → **B-03**.
+
 ---
 
 ## Nasıl kurulur (kullanıcı için tek cümle)
@@ -60,6 +71,26 @@ soru soracaksan **onay kutusuyla (AskUserQuestion)** sor.
 
 ---
 
+## ⚠️ EN KRİTİK KURAL — ne nereye kurulur
+
+Bu kurulumun **iki ayrı hedefi** vardır ve karıştırılırsa sistem sessizce çalışmaz:
+
+| Ne | Nereye | Neden oraya |
+|---|---|---|
+| **Çalışma kuralları** (çekirdek + profil, **tek dosya**) | `%USERPROFILE%\.claude\CLAUDE.md` | Her projede, her sohbette, hangi klasör açık olursa olsun **otomatik yüklenir** |
+| **İzinler / oto mod** | `%USERPROFILE%\.claude\settings.json` | Oturum başında okunur |
+| **Hafıza** (notlar + `MEMORY.md` indeksi) | `%USERPROFILE%\.claude\projects\<proje>\memory\` | Hafıza indeksi her sohbetin başında **otomatik yüklenir** |
+| **İçerik** (Belgeler, Gunluk, Sablonlar, role özel klasörler, `00-PANO.md`) | `<KASA>` | Kullanıcının kendi dosyaları; yedeklenen, Obsidian'da açılan yer |
+| **Köprü dosyası** (burası ne, ne nereye yazılır) | `<KASA>\CLAUDE.md` | Kasada çalışırken klasör haritasını verir — **kural dosyası değildir** |
+
+⛔ **Kural ya da hafıza dosyasını `<KASA>` içine YAZMA.** Kasaya yazılan `CLAUDE.md` yalnız
+editör tam o klasörde açıkken okunur; kasaya yazılan bir `MEMORY.md` ise **hiçbir zaman**
+okunmaz. 11.08.2026'da kurulum tam bu yüzden çalışmadı.
+
+⚠️ **Kullanıcı adını `$env:USERNAME`'den, ana dizini `$env:USERPROFILE`'dan oku.** Varsayma.
+
+---
+
 ## Adım 0 — Profil seçimi (İLK İŞ)
 
 Kullanıcıya **onay kutusuyla** şunu sor:
@@ -96,16 +127,17 @@ Doğru yol: **ana profil + ek modül.**
 İkinci rol seçilirse (`<EK-ROL>`), Adım 2 ve 3'te şunları **ilave** yap:
 
 1. **Adım 2'ye ek:** `iskelet/<EK-ROL>/` içindeki klasörleri de `<KASA>` köküne kopyala
-   → kasada **9 klasör** olur (5 ortak + 2 ana rol + 2 ek rol).
+   → kasada **8 klasör** olur (4 ortak + 2 ana rol + 2 ek rol).
 2. **Adım 2'ye ek:** `sablonlar/<EK-ROL-KARŞILIĞI>/` dosyalarını da `<KASA>\Sablonlar\`
    içine kopyala.
-3. **Adım 3'e ek:** `profiller/<EK-ROL>/EK-MODUL.md` dosyasını `<KASA>\EK-ROL.md` olarak
-   kopyala ve `<KASA>\CLAUDE.md` dosyasının **en üstündeki alıntı bloğuna** şu satırı ekle:
-   > **Bu kullanıcının bir de ikinci rolü var — `EK-ROL.md` dosyasını da oku ve uygula.**
-   > Çelişki olursa bu dosya (ana profil) kazanır.
+3. **Adım 3'e ek:** `profiller/<EK-ROL>/EK-MODUL.md` içeriğini, ürettiğin
+   `%USERPROFILE%\.claude\CLAUDE.md` dosyasının **sonuna ekle** (ayrı dosya olarak kurma —
+   ayrı dosya otomatik yüklenmez). Araya şu ayraç satırını koy:
+   `---` + `> **Bu kullanıcının ikinci bir rolü de var. Çelişki olursa ana profil kazanır.**`
 4. **Adım 4'e ek:** role özel 7. soruyu **iki rol için de** sor.
-5. **Adım 6'ya ek:** klasör sayısı kontrolü **9** olur; Claude'a "kaç klasör var" diye
-   sorduğunda **9** demeli ve **iki rolü de** sayabilmelidir.
+5. **Adım 6'ya ek:** klasör sayısı kontrolü **8** olur; Claude'a "kaç klasör var" diye
+   sorduğunda **8** demeli ve **iki rolü de** sayabilmelidir.
+   Doğrulama betiğini `-EkRol` anahtarıyla çalıştır.
 
 Ek rol **sonradan da** eklenebilir: bu beş maddeyi uygulamak yeter, kurulumu baştan yapmak
 gerekmez. Hafıza ve mevcut dosyalar **silinmez.**
@@ -151,18 +183,22 @@ gerekmez. Hafıza ve mevcut dosyalar **silinmez.**
 
 3. **Ortak iskeleti kopyala:** `iskelet/_ortak/` içindeki **her şeyi** `<KASA>` köküne kopyala.
    (`_ortak` klasörünün *kendisini* değil, *içindekileri*.)
+   ⛔ `hafiza/` klasörünü **kopyalama** — orası kasaya değil, Adım 4'te kullanıcının hafıza
+   dizinine gider.
 
 4. **Role özel klasörleri kopyala:** `iskelet/<PROFİL>/` içindeki her şeyi de `<KASA>` köküne
    kopyala.
 
-Sonuçta `<KASA>` içinde **7 klasör** olmalı:
+Sonuçta `<KASA>` içinde **6 klasör** olmalı:
 
-| Profil | Ortak klasörler (5) | Role özel (2) |
+| Profil | Ortak klasörler (4) | Role özel (2) |
 |---|---|---|
-| `isg-uzmani` | `memory` `Belgeler` `Sablonlar` `Arastirma` `Gunluk` | `Mevzuat` `Firmalar` |
+| `isg-uzmani` | `Belgeler` `Sablonlar` `Arastirma` `Gunluk` | `Mevzuat` `Firmalar` |
 | `akademisyen` | aynı | `Kaynakca` `Makaleler` |
 | `genel` | aynı | `Isler` `Kurumlar` |
 | `yazilimci` | aynı | `Projeler` `Notlar` |
+
+⚠️ Kasada `memory\` klasörü **yoktur**. Hafıza kasanın dışındadır (Adım 4).
 
 5. **Şablonları kopyala:** `sablonlar/<PROFİL-KARŞILIĞI>/` altındaki dosyaları
    `<KASA>\Sablonlar\` içine kopyala.
@@ -172,50 +208,98 @@ Sonuçta `<KASA>` içinde **7 klasör** olmalı:
    herkese lazım olur.
 
 6. `<KASA>` içindeki `[KURULUM TARİHİ]` ve `[GÜN]` yer tutucularını **bugünün tarihiyle**
-   değiştir (`00-PANO.md`, `MEMORY.md`, `Gunluk\ORNEK-GUN.md`).
+   değiştir (`00-PANO.md`, `Gunluk\ORNEK-GUN.md`).
 
 7. `Gunluk\` altına **bugünün dosyasını** aç: `YYYY-AA-GG.md` — `ORNEK-GUN.md` biçiminde.
 
-**✅ Doğrulama:** `<KASA>` içinde 7 klasör + `00-PANO.md`, `MEMORY.md`, `NEDIR.md`,
-`ILK-GUN.md`, `SINIRLAR.md` dosyaları var; `Sablonlar\` boş değil.
+**✅ Doğrulama:** `<KASA>` içinde 6 klasör + `00-PANO.md`, `CLAUDE.md` (köprü), `NEDIR.md`,
+`ILK-GUN.md`, `SINIRLAR.md` dosyaları var; `Sablonlar\` boş değil; `memory\` **yok**.
 
 ---
 
-## Adım 3 — CLAUDE.md yerleştirme ve okunduğunun doğrulanması
+## Adım 3 — Çalışma kurallarını KULLANICI DİZİNİNE kur
 
-Bu adım **kurulumun en kritik adımıdır.** Asistan kuralları okumazsa sistemin geri kalanı çalışmaz.
+Bu adım **kurulumun en kritik adımıdır.** Asistan kuralları okumazsa sistemin geri kalanı
+çalışmaz — ve kurallar yanlış yerdeyse **hiçbir hata mesajı almazsın**, sistem sessizce
+sıradan bir asistan gibi davranır.
 
-1. `profiller/_ortak.md` dosyasını `<KASA>\CEKIRDEK.md` olarak kopyala.
-2. `profiller/<PROFİL>/CLAUDE.md` dosyasını `<KASA>\CLAUDE.md` olarak kopyala.
-   → **Proje seviyesine** kurulur, kullanıcı seviyesine (`~/.claude/CLAUDE.md`) değil.
-   Sebep: kişinin başka klasörlerde çalışması bu kurallardan etkilenmesin, kasa açıldığında
-   kurallar kendiliğinden yüklensin.
-3. `<KASA>\NEDIR.md` içindeki klasör haritası tablosuna **role özel iki klasörü ekle**
-   (`_(role özel klasörler)_` satırını değiştirerek). Açıklamalarını role özel
-   `NEDIR.md` dosyalarından al.
-4. Editörü `<KASA>` klasörü **açık olacak şekilde** başlat (File → Open Folder). Klasöre
+### 3.1 Birleşik kural dosyasını üret
+
+`%USERPROFILE%\.claude\` klasörü yoksa oluştur, sonra **tek bir dosya** yaz:
+**`%USERPROFILE%\.claude\CLAUDE.md`**
+
+İçerik sırası:
+
+1. `profiller/_ortak.md` — ortak çekirdek (tamamı)
+2. `---` ayracı
+3. `profiller/<PROFİL>/CLAUDE.md` — role özel bölüm (tamamı)
+4. _(Adım 0b'de ek rol seçildiyse)_ `---` + `profiller/<EK-ROL>/EK-MODUL.md`
+
+⛔ **İki ayrı dosya kurma.** `~\.claude\` altına konan ikinci bir dosya (eski `CEKIRDEK.md`)
+**otomatik yüklenmez.** Kurallar tek dosyada birleşik durur.
+
+Dosyayı yazdıktan sonra içindeki `[DEPO YOLU]` yer tutucusunu bu deponun **gerçek yoluyla**
+değiştir (belge dönüştürme betiklerinin yeri).
+
+### 3.2 Kasaya köprü dosyasını koy
+
+`iskelet/_ortak/CLAUDE.md` dosyası `<KASA>\CLAUDE.md` olarak kopyalanır. Bu **kural dosyası
+değildir** — kasada çalışırken "burası ne, ne nereye yazılır" sorusunu cevaplar.
+Kişisel kural ya da hafıza notu buraya **yazılmaz**.
+
+### 3.3 Klasör haritasını tamamla
+
+`<KASA>\NEDIR.md` içindeki klasör haritası tablosuna **role özel iki klasörü ekle**
+(`_(role özel klasörler)_` satırını değiştirerek). Açıklamalarını role özel
+`NEDIR.md` dosyalarından al.
+
+### 3.4 Doğrula — kuralların gerçekten yüklendiğini gör
+
+1. Editörü `<KASA>` klasörü **açık olacak şekilde** başlat (File → Open Folder). Klasöre
    güven isteniyorsa onayla.
-5. **Yeni bir Claude sohbeti aç** ve şunu yaz:
+2. **Yeni bir Claude sohbeti aç** ve şunu yaz:
 
 ```
-Çalışma kurallarımı okudun mu? Okuduysan: hafıza indeks dosyasının adını,
-klasör haritasındaki klasör sayısını ve rolümü tek cümleyle söyle.
+Calisma kurallarimi okudun mu? Okuduysan: rolumu, klasor haritasindaki klasor sayisini
+ve hafizanin hangi dizinde durdugunu tek cumleyle soyle.
 ```
 
-   **Beklenen cevap:** Türkçe · `MEMORY.md` · **7 klasör** · doğru rol.
+   **Beklenen cevap:** Türkçe · doğru rol · **6 klasör** (ek rol varsa 8) ·
+   hafıza dizini olarak `%USERPROFILE%\.claude\projects\...` altında bir yol.
 
-6. **İkinci test — yazma yetkisi:**
+3. **İkinci test — yazma yetkisi:**
 
 ```
 Gunluk klasorundeki bugunun dosyasina "Kurulum tamamlandi" diye bir satir ekle.
 ```
 
-   İzin istenirse onayla, sonra dosyayı aç ve satırın orada olduğunu **gözünle gör.**
+   Sonra dosyayı aç ve satırın orada olduğunu **gözünle gör.**
 
-**✅ Doğrulama:** (a) "7 klasör" dendi ve rol doğru söylendi, (b) günlük dosyasındaki satır
-gerçekten yazıldı.
+**✅ Doğrulama:** (a) "6 klasör" dendi, rol doğru söylendi ve hafıza dizini **kasanın dışında**
+gösterildi, (b) günlük dosyasındaki satır gerçekten yazıldı.
 
-⛔ **Bu adım geçmeden kuruluma "bitti" deme.**
+⛔ **Bu adım geçmeden kuruluma "bitti" deme.** Asistan hafıza dizini olarak kasanın içindeki
+bir yolu söylüyorsa kurulum **yanlıştır** — 3.1'e dön.
+
+---
+
+## Adım 3b — Oto mod ve izinler
+
+Kullanıcı belge üreten biridir, kod yazan değil: gün boyu "izin veriyor musun" sorusuyla
+karşılaşmamalı. Ama **silme ve geri alınamaz işlemler daima sorulmalı.**
+
+1. `ayarlar/settings-sablon.json` dosyasını **`%USERPROFILE%\.claude\settings.json`** olarak
+   yerleştir.
+2. ⛔ **Var olan bir `settings.json` varsa EZME.** Önce oku, `permissions.allow` ve
+   `permissions.deny` girdilerini **birleştir** (mevcut girdiler korunur), `defaultMode`
+   yoksa ekle. Sonucun geçerli JSON olduğunu doğrula.
+3. Ayar dosyası **oturum başında** okunur — değişiklik sonrası **yeni sohbet** açılmalıdır.
+
+Neyin niye orada olduğu ve öncelik sırası (`deny` → `ask` → `allow`):
+[`ayarlar/NEDIR.md`](ayarlar/NEDIR.md).
+
+**✅ Doğrulama:** Adım 6'daki **(e)** ve **(f)** testleri. Bir `.md` dosyası düzenlendiğinde
+izin sorusu **çıkmamalı**; bir dosya silinmek istendiğinde **çıkmalı**.
 
 ---
 
@@ -247,20 +331,44 @@ uzun uzun yazdırma, gerekirse sen toparla ve teyit et.
      düzenli işler var mı (aylık rapor, periyodik toplantı)?"
    - **Yazılımcı:** "Hangi teknolojilerle çalışıyorsun? Kod depoların nerede duruyor?"
 
+### Önce: hafıza dizinini BUL (tahmin etme)
+
+Claude'un hafıza dizini `%USERPROFILE%\.claude\projects\<proje>\memory\` altındadır ama
+`<proje>` adının nasıl türetildiği **dokümante değildir** ve Türkçe karakterli yollarda
+beklenmedik sonuç verir. Bu yüzden **hesaplama, bul:**
+
+1. Editör `<KASA>` açıkken açtığın sohbette Claude'a sor:
+   > **"Hafıza dizininin tam yolunu yaz."**
+   Kendi ortam bilgisinden gerçek yolu verir. Bu **birincil yöntemdir.**
+2. Cevap gelmezse ölç — en son değişen proje dizini bu oturumunkidir:
+   ```
+   Get-ChildItem "$env:USERPROFILE\.claude\projects" | Sort-Object LastWriteTime -Descending | Select-Object -First 3 FullName, LastWriteTime
+   ```
+3. Bulduğun yolu `<HAFIZA>` diye anacağız. Yoksa oluştur.
+
+⛔ **`<KASA>` içine hafıza yazma.** Kasadaki bir `MEMORY.md` hiçbir zaman yüklenmez.
+
 ### Cevaplardan ne yazacaksın (SORMADAN, hemen)
 
 **Her cevabı aldıktan sonra — sonda toplu değil, üretir üretmez** şu dosyaları yaz:
 
 | Dosya | İçerik |
 |---|---|
-| `<KASA>\memory\kullanici-profil.md` | Soru 1, 2, 4, 7 → rol, işin doğası, iletişim tercihi, yöntem tercihleri |
-| `<KASA>\memory\calisilan-kurumlar.md` | Soru 3 → kurum/proje listesi, her biri tek satır |
-| `<KASA>\memory\ilk-oncelikler.md` | Soru 5, 6 → yorucu bulduğu işler + ilk yardım isteyeceği iş |
+| `<HAFIZA>\kullanici-profil.md` | Soru 1, 2, 4, 7 → rol, işin doğası, iletişim tercihi, yöntem tercihleri |
+| `<HAFIZA>\calisilan-kurumlar.md` | Soru 3 → kurum/proje listesi, her biri tek satır |
+| `<HAFIZA>\ilk-oncelikler.md` | Soru 5, 6 → yorucu bulduğu işler + ilk yardım isteyeceği iş |
 
-Her dosyanın başına `CEKIRDEK.md` bölüm 4'teki bilgi bloğunu koy
+Her dosyanın başına ortak çekirdek bölüm 4'teki bilgi bloğunu koy
 (`ad`, `aciklama`, `tip`, `tarih`).
 
-Sonra **`<KASA>\MEMORY.md`'ye üç satır bağlantı ekle** — ilgili başlıkların altına.
+Sonra:
+- `hafiza/MEMORY.md` şablonunu `<HAFIZA>\MEMORY.md` olarak kopyala ve **üç satır bağlantı
+  ekle** — ilgili başlıkların altına. İndekse girmeyen not bulunmaz.
+- **`%USERPROFILE%\.claude\CLAUDE.md` içindeki "Kullanıcı Künyesi" tablosunu doldur**
+  (rol · kurumlar · çalışma tercihi · yöntem tercihi · kasa yolu · tarih).
+  `[KURULUM: ...]` yer tutucusu **kalmamalı.**
+  *Neden iki yer: hafıza dizini adı kasa taşınırsa değişebilir; künye kural dosyasında
+  durursa kullanıcı her koşulda tanınır.*
 
 ⚠️ **Hafızaya kişisel/hassas veri yazma** (kimlik numarası, sağlık bilgisi, ücret).
 Kurum adı ve rol bilgisi yazılabilir.
@@ -272,8 +380,8 @@ Ayrıca:
   kartlarından **kullanıcının cevaplarına en uygun 5 tanesiyle** değiştir
   (istem metinlerindeki köşeli parantezleri onun gerçek kurum/konu adlarıyla doldur).
 
-**✅ Doğrulama:** `memory\` altında 3 dosya var, `MEMORY.md` bunlara bağlanıyor,
-`ILK-GUN.md` içinde kişiye özel 5 istem duruyor.
+**✅ Doğrulama:** `<HAFIZA>` altında 3 not + `MEMORY.md` var ve indeks üçüne de bağlanıyor;
+kural dosyasındaki künye dolu; `ILK-GUN.md` içinde kişiye özel 5 istem duruyor.
 
 ---
 
@@ -298,27 +406,59 @@ onun gerçek işini kullan. Uygun bir iş çıkmadıysa profiline göre şunu ö
 
 ---
 
-## Adım 6 — Kurulum doğrulama listesi
+## Adım 6 — Doğrulama: "yazıldı mı" değil, "çalışıyor mu"
 
-Her maddeyi **fiilen kontrol et**, tahmin etme. Sonucu `KURULUM-KONTROL.md`'ye işle.
+⚠️ Eski kurulumda 12 maddelik bir liste vardı ve **hepsi geçtiği hâlde sistem çalışmıyordu.**
+Sebep: liste "dosya yazıldı mı" diye soruyordu, "sistem onu okuyor mu" diye değil.
+Doğrulama artık iki katmanlıdır.
 
-| # | Kontrol | Nasıl ölçülür |
+### 6.1 Yapısal ön koşullar — betik ölçer
+
+```
+powershell -ExecutionPolicy Bypass -File araclar\kurulum-dogrula.ps1 -Kasa <KASA>
+```
+_(Adım 0b'de ek rol seçildiyse sona `-EkRol` ekle.)_
+
+Betik şunları **ölçer**, geçmezse **çıkış kodu 1** döner: kural dosyası kullanıcı dizininde
+mi · künye dolu mu · çekirdek+profil tek dosyada mı · `settings.json` geçerli ve oto mod
+açık mı · silme `deny`'da mı · hafıza dizini bulundu mu · üç not + indeks bağlı mı ·
+kasada 6 klasör var mı · **kasaya kural/hafıza dosyası sızmış mı** (eski hatanın
+regresyon kapısı).
+
+⛔ Betik "KALDI" diyorsa davranış testlerine **geçme**, önce onu düzelt.
+
+### 6.2 Davranış testleri — kurulumun gerçek kanıtı
+
+Bunları makine koşamaz; **operatör elle koşar.** Her biri geçmelidir.
+
+| # | Test | Beklenen |
 |---|---|---|
-| 1 | Kasa doğru yerde | `<KASA>\CLAUDE.md` var (alt klasörde değil, **kökte**) |
-| 2 | Klasör yapısı tam | `<KASA>` içinde tam **7 klasör** var (Adım 0b'de ek rol seçildiyse **9**) |
-| 3 | Kurallar okunuyor | Claude'a "klasör haritasında kaç klasör var" → **"7"** demeli |
-| 4 | Rol doğru yüklü | Claude'a "benim rolüm ne" → doğru rolü söylemeli |
-| 5 | Yazma çalışıyor | Claude bir dosya yazdı, dosya diskte görüldü |
-| 6 | Hafıza kuruldu | `memory\` altında **3 dosya** var, `MEMORY.md` üçüne de bağlanıyor |
-| 7 | Hafıza okunuyor | **Yeni bir sohbette** "beni tanıyor musun" → rolünü ve kurumlarını saymalı |
-| 8 | Şablonlar yerinde | `<KASA>\Sablonlar\` içinde en az 2 şablon var |
-| 9 | Pano canlı | `00-PANO.md`'de kullanıcının gerçek ilk işi yazılı |
-| 10 | Obsidian bağlı | Obsidian kasası `<KASA>`, sol panelde 7 klasör görünüyor |
-| 11 | Yedekleme açık | Bulut istemcisinde `<KASA>` senkron listesinde, yeşil tik alınmış |
-| 12 | Kullanıcı denedi | Kullanıcı kendi eliyle en az 1 istem yazdı ve sonucu gördü |
+| **a** | **Yeni sohbet** aç: "beni tanıyor musun?" | Rolünü ve çalıştığı kurumları sayar |
+| **b** | "Şablonlarım nerede?" | `<KASA>\Sablonlar` |
+| **c** | "Nasıl cevap vermemi istiyorsun?" | Çalışma tercihini bilir (kısa/ayrıntılı, soru sorma tercihi) |
+| **d** | Küçük bir iş ver | **ÖNCE** süre tahmini, **SONRA** gerçekleşen süre yazar |
+| **e** | Bir dosyayı düzenlettir | İzin sorusu **ÇIKMAMALI** |
+| **f** | Bir test dosyasını sildirmeye çalış | İzin sorusu **ÇIKMALI** |
+| **g** | Kasanın bir **alt klasöründe** sohbet aç, (a)'yı tekrarla | Aynı sonuç |
 
-**7. madde en kritik olanıdır** — hafızanın gerçekten okunduğunu yalnız **yeni bir sohbet**
-kanıtlar. Aynı sohbette sorarsan zaten bağlamda olduğu için yanıltıcı olur.
+⛔ **(a)–(g)'den herhangi biri kalırsa kurulum BAŞARISIZ sayılır.** "Çoğu çalışıyor" diye
+teslim edilmez — kalan madde düzeltilir, testler baştan koşulur.
+
+**Neden yeni sohbet:** hafızanın gerçekten yüklendiğini yalnız yeni bir sohbet kanıtlar;
+aynı sohbette sorarsan bilgi zaten bağlamdadır ve cevap yanıltır.
+**Neden alt klasör (g):** kuralların kullanıcı dizininde olduğunu, kasa klasörüne bağlı
+olmadığını yalnız bu test gösterir. 11.08.2026'daki hata tam burada yakalanırdı.
+
+### 6.3 Kalan elle kontroller
+
+| # | Kontrol | Nasıl |
+|---|---|---|
+| 1 | Pano canlı | `00-PANO.md`'de kullanıcının gerçek ilk işi yazılı |
+| 2 | Obsidian bağlı | Obsidian kasası `<KASA>`, sol panelde 6 klasör görünüyor |
+| 3 | Yedekleme açık | Bulut istemcisinde `<KASA>` senkron listesinde, yeşil tik alınmış |
+| 4 | Kullanıcı denedi | Kullanıcı kendi eliyle en az 1 istem yazdı ve sonucu gördü |
+
+Sonucu [`KURULUM-KONTROL.md`](KURULUM-KONTROL.md)'ye işle.
 
 Hepsi geçtiyse kullanıcıya şunu söyle:
 
@@ -354,7 +494,13 @@ Kullanıcıya **onay kutusuyla** sor:
   ```
   winget install --id JohnMacFarlane.Pandoc
   ```
-  Kurulumdan sonra **terminali kapatıp yeniden aç** (PATH tazelensin).
+  ⚠️ **Kurulumdan hemen sonra `pandoc` "tanınmıyor" diyebilir** — kurulum başarısız değildir,
+  açık oturum eski `PATH`'i taşır. Sırayla dene: (1) tam yolla çağır
+  (`"$env:LOCALAPPDATA\Pandoc\pandoc.exe"`), (2) `PATH`'i tazele:
+  ```
+  $env:Path = [Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [Environment]::GetEnvironmentVariable("Path","User")
+  ```
+  (3) editörü kapatıp yeniden aç. *(11.08.2026'da tam bu yaşandı.)*
 - **LaTeX seçildiyse** (Pandoc'a ek olarak):
   ```
   powershell -ExecutionPolicy Bypass -File araclar\belge\tectonic-kur.ps1
@@ -404,21 +550,26 @@ açıp Türkçe denetim satırını gördü.
 
 | Belirti | Sebep | Ne yapacaksın |
 |---|---|---|
-| Claude "7 klasör" demiyor, genel cevap veriyor | `CLAUDE.md` yanlış yerde (alt klasörde kalmış) | Adım 3'ü tekrarla — dosya **doğrudan** `<KASA>` kökünde olmalı |
-| Claude İngilizce cevap veriyor | Kurallar okunmamış | Aynı sebep. Klasörü kapat, `File → Open Folder` ile `<KASA>`'yı **yeniden** aç |
-| Claude "CEKIRDEK.md nedir bilmiyorum" diyor | Ortak çekirdek kopyalanmamış | `profiller/_ortak.md` → `<KASA>\CEKIRDEK.md` kopyasını yap |
-| Klasör sayısı 7 değil | `_ortak` ya da role özel iskelet eksik/çift kopyalanmış | Adım 2.3–2.4'ü kontrol et; `<KASA>\_ortak\` diye bir klasör oluştuysa içindekileri köke taşı, boşu sil |
+| **Yeni sohbet kullanıcıyı tanımıyor** (a testi) | Kural ve/veya hafıza **kasaya** kurulmuş — Claude bunları kullanıcı dizininden yükler | Adım 3.1 ve Adım 4'ü tekrarla. `kurulum-dogrula.ps1` regresyon kapısı bunu yakalar. **En sık ve en sessiz hata budur** |
+| Kasa açıkken çalışıyor, **başka klasörde çalışmıyor** (g testi) | Kurallar proje seviyesinde kalmış (`<KASA>\CLAUDE.md` içinde) | Kural dosyasını `%USERPROFILE%\.claude\CLAUDE.md` konumuna taşı; kasadakini köprüye indir (Adım 3.2) |
+| Claude "6 klasör" demiyor, genel cevap veriyor | Kural dosyası yüklenmiyor | `%USERPROFILE%\.claude\CLAUDE.md` var mı bak; varsa editörü kapat–aç ve **yeni sohbet** dene |
+| Claude İngilizce cevap veriyor | Aynı sebep — kurallar okunmamış | Aynı çözüm |
+| Claude "CEKIRDEK.md nedir bilmiyorum" diyor | Çekirdek ayrı dosya olarak kurulmuş; ayrı dosya **otomatik yüklenmez** | Çekirdeği ve profili **tek dosyada birleştir** (Adım 3.1) |
+| Klasör sayısı 6 değil | `_ortak` ya da role özel iskelet eksik/çift kopyalanmış; ya da `hafiza/` yanlışlıkla kasaya kopyalanmış | Adım 2.3–2.4'ü kontrol et; `<KASA>\_ortak\` oluştuysa içindekileri köke taşı, boşu sil; `<KASA>\memory\` ve `<KASA>\hafiza\` varsa **sil** |
+| Her dosya düzenlemesinde izin soruyor (e testi) | `settings.json` yok ya da `defaultMode` ayarlanmamış | Adım 3b. Değişiklikten sonra **yeni sohbet** aç — ayar oturum başında okunur |
+| Silme işlemi sormadan yapılıyor (f testi) | `deny` listesi eksik ya da `bypassPermissions` kullanılmış | `ayarlar/settings-sablon.json`'daki `deny` listesini geri koy; `bypassPermissions` **kullanma** |
+| Asistan süre tahmini vermiyor (d testi) | Kural dosyası eski sürüm | Depoyu güncelle (`git pull`), Adım 3.1'i tekrarla |
 | Claude paneli boş / "sign in" diyor | Eklenti oturumu yok | Panelden giriş yap, tarayıcıda doğrulamayı tamamla |
 | Claude dosyaya yazamıyor, izin döngüsüne giriyor | Klasöre güven verilmemiş | Editörü kapat, tekrar aç, "Yes, I trust the authors" de |
 | `C:\` altına klasör açılmıyor | Yönetici yetkisi yok | Kasayı `C:\Users\<kullanıcı>\<Ad>` yap ve **tüm dosyalardaki yol referanslarını** güncelle |
 | Obsidian klasörleri göstermiyor | Yanlış klasör kasa yapılmış | Sol alt kasa adı → "Open another vault" → `<KASA>` |
 | Obsidian `[[bağlantı]]`ları tıklanabilir yapmıyor | Dosya `.md` değil ya da salt-okunur | Uzantıyı kontrol et; klasördeki salt-okunur işaretini kaldır |
 | Bulut istemcisinde kasa görünmüyor | Klasör "yedekle" değil "akış" modunda eklenmiş | Tercihler → Bilgisayarım → klasörü kaldır, yedekleme modunda yeniden ekle |
-| Yeni sohbette hafıza hatırlanmıyor | `MEMORY.md` bağlantıları yazılmamış | Adım 4'ün son maddesini tekrarla — `memory\` dosyaları indekse bağlanmalı |
+| Yeni sohbette hafıza hatırlanmıyor | Notlar yazıldı ama `MEMORY.md` indeksine bağlanmadı — ya da hafıza yanlış dizine yazıldı | Adım 4'ü tekrarla: önce `<HAFIZA>` dizinini **bul**, sonra notları oraya yaz ve indekse bağla |
 | Kullanıcı terminal ekranı görünce takılıyor | Beklenen durum | Terminal panelini kapat. Bu sistemde terminal **gerekmiyor** |
 | Türkçe karakterler bozuk görünüyor | Dosya kodlaması | Dosyaları **UTF-8** kaydet; dosya **adlarında** Türkçe karakter kullanma |
-| Kullanıcı "profil yanlış seçilmiş" diyor | Adım 0'da yanlış rol | Yeni profilin `CLAUDE.md`'sini kopyala, eksik klasörleri ekle — **hafızayı silme**, o hâlâ geçerli |
-| `pandoc` "tanınmıyor" diyor, oysa kuruldu | Açık terminal eski PATH'i taşıyor | Terminali kapat–aç. Betikler kurulum klasörüne de bakar; yine olmazsa `belge-hatti-kontrol.ps1` çalıştır |
+| Kullanıcı "profil yanlış seçilmiş" diyor | Adım 0'da yanlış rol | Adım 3.1'i yeni profille tekrarla (kural dosyasını yeniden üret), eksik klasörleri ekle — **hafızayı ve künyeyi silme**, ikisi de hâlâ geçerli |
+| `pandoc` "tanınmıyor" diyor, oysa kuruldu | Açık oturum eski `PATH`'i taşıyor — program kurulu ama görünmez | Sırayla: (1) **tam yolla** çağır (`"$env:LOCALAPPDATA\Pandoc\pandoc.exe"`, `"$env:ProgramFiles\Pandoc\pandoc.exe"`), (2) `$env:Path`'i makine+kullanıcı değerlerinden **tazele**, (3) editörü kapat–aç. Sonra `belge-hatti-kontrol.ps1` ile ölç. **"Kurulum başarısız" deme** — 11.08'de bu yaşandı, ikinci denemede düzeldi |
 | PDF üretiliyor ama Türkçe harfler kutu/soru işareti | Dosya UTF-8 değil | `.md` dosyasını **UTF-8** kaydet; dosya adlarında Türkçe karakter kullanma |
 | LaTeX derlemesi "font bulunamadı" diyor | `\setmainfont` sistemde olmayan bir fontu istiyor | `makale.tex` içindeki fontu kurulu bir fontla değiştir (`Calibri`) ya da `TeX Gyre Termes` kullan |
 | İlk LaTeX derlemesi çok uzun sürüyor | Tectonic TeX paketlerini ilk seferde indiriyor | Normal. Bir kereye mahsustur; sonraki derlemeler saniyeler sürer |
@@ -431,18 +582,26 @@ açıp Türkçe denetim satırını gördü.
 ```
 README.md                  → bu dosya, kurulumun tek giriş noktası
 KATKI.md                   → katkı kuralları + gizlilik sınırı
-KURULUM-KONTROL.md         → her kurulumda doldurulan kontrol listesi
+KURULUM-KONTROL.md         → her kurulumda doldurulan kontrol listesi + canlı kurulum bulguları
 LICENSE                    → MIT
 
-profiller/
-  _ortak.md                → her profilde aynı olan çekirdek kurallar → kasada CEKIRDEK.md
+profiller/                 → ↓ BİRLEŞTİRİLİP %USERPROFILE%\.claude\CLAUDE.md olur
+  _ortak.md                → her profilde aynı olan çekirdek kurallar (önce gelir)
   isg-uzmani/CLAUDE.md     + EK-MODUL.md   (ana profil + ikincil rol modülü)
   akademisyen/CLAUDE.md    + EK-MODUL.md
   genel/CLAUDE.md          + EK-MODUL.md
   yazilimci/CLAUDE.md      + EK-MODUL.md
 
-iskelet/
-  _ortak/                  → her kasaya kopyalanan ortak yapı
+ayarlar/                   → ↓ %USERPROFILE%\.claude\settings.json olur
+  settings-sablon.json     → oto mod (acceptEdits) + allow/deny listeleri
+  NEDIR.md                 → hangi anahtar ne yapar, öncelik sırası
+
+hafiza/                    → ↓ %USERPROFILE%\.claude\projects\<proje>\memory\ olur
+  MEMORY.md                → hafıza indeksi şablonu (KASAYA KOPYALANMAZ)
+  NEDIR.md                 → hafıza nerede durur, neden orada durur
+
+iskelet/                   → ↓ <KASA> olur (yalnız içerik + köprü)
+  _ortak/                  → her kasaya kopyalanan ortak yapı + köprü CLAUDE.md
   isg-uzmani/  akademisyen/  genel/  yazilimci/    → role özel klasörler
 
 sablonlar/
@@ -452,6 +611,7 @@ istemler/
   isg.md  genel.md  akademisyen.md  yazilimci.md
 
 araclar/
+  kurulum-dogrula.ps1      → kurulumun ÇALIŞTIĞINI ölçer, geçmezse çıkış kodu 1
   belge/                   → Adım 7'nin (opsiyonel) belge çıktı hattı
     md2pdf.ps1             → Markdown → PDF   (kurulum gerektirmez)
     md2docx.ps1            → Markdown → Word  (Pandoc)

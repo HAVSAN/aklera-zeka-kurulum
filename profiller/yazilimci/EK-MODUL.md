@@ -2,10 +2,11 @@
 
 > Bu dosya **ana profil değildir.** Kullanıcının asıl rolü başkadır (akademisyen, İSG ya da
 > ofis); kod yazmak **ikinci işidir** — analiz betiği, küçük araç, kişisel proje.
-> Kurulumda `<KASA>\EK-ROL.md` adıyla durur.
+> Kurulumda `%USERPROFILE%\.claude\CLAUDE.md` dosyasının **sonuna eklenir** — ayrı bir dosya
+> olarak kurulmaz, çünkü ayrı dosya otomatik yüklenmez.
 >
-> Ana `CLAUDE.md` ve `CEKIRDEK.md` aynen geçerlidir. Çelişki olursa **ana profil kazanır**;
-> yalnız aşağıdaki dört konuda bu dosya öne geçer.
+> Ortak çekirdek ve ana profil bölümleri aynen geçerlidir. Çelişki olursa **ana profil
+> kazanır**; yalnız aşağıdaki dört konuda bu bölüm öne geçer.
 
 ---
 
