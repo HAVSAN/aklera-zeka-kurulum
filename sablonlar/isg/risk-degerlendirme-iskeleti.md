@@ -33,9 +33,24 @@ Kapsam DIŞI bırakılanlar ve gerekçesi:
 | Alan | Değer |
 |------|-------|
 | Yöntem adı | `[DOLDURULACAK: Fine-Kinney / L tipi matris / diğer]` |
-| Puanlama ölçeği | |
+| Puanlama ölçeği | *(ayrıntı 3.1'de)* |
 | Kabul edilebilir risk eşiği | |
 | Yöntem seçim gerekçesi | |
+
+### 3.1 Ölçek tabloları
+
+> Kullanılan yöntemin ölçekleri **buraya** yazılır (Fine-Kinney'de olasılık, frekans, şiddet
+> ve risk düzeyi eşikleri; L tipi matriste olasılık × şiddet matrisi). Ölçek yazılmadan
+> tablodaki skorlar okunamaz. Kullanıcı kendi eşik tablosunu kullanıyorsa **onunkini** yaz,
+> literatür değerini dayatma.
+
+| Ölçek | Değer aralığı | Tanım |
+|---|---|---|
+| | | |
+
+**Skor tablosu ön değer taşıyorsa** (saha görülmeden hazırlanan taslak) 5. bölümün başına
+şu uyarı konur ve belge imzaya **sunulmaz**:
+`⚠️ ÖN DEĞERDİR — saha gözlemi ve ölçüm yapılmadan kesinleşmez.`
 
 ## 4. Dayanak mevzuat
 
@@ -46,6 +61,10 @@ Kapsam DIŞI bırakılanlar ve gerekçesi:
 | | | | | |
 
 ## 5. Tehlike ve risk tablosu
+
+> Sütun sırası yöntemden bağımsızdır (çarpım aynıdır); **hangi sütunun hangi ölçeğe ait
+> olduğu 3.1'de yazılıdır.** Saha görülmediyse "Mevcut önlem" sütunu doldurulmaz →
+> `[SAHADA GÖZLENECEK]`.
 
 | No | Bölüm | Tehlike | Etkilenen | Mevcut önlem | Olasılık | Şiddet | Frekans | Skor | Risk düzeyi |
 |----|-------|---------|-----------|--------------|----------|--------|---------|------|-------------|

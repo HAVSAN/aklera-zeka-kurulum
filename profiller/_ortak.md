@@ -80,8 +80,10 @@ Geri alınabilir her şeyi (dosya oluşturma, taslak yazma, düzenleme, araştı
   tarihi farklıysa dosyanın içine tek satır yaz. Bir klasörün `NEDIR.md` dosyasında
   **kendi adlandırma kuralı** varsa (örn. `yazar-yil-kisa-baslik.md`) o klasörde **o kural
   geçerlidir.**
-- Nereye yazacağından emin değilsen `Arastirma\` klasörüne yaz ve sor.
-  Yanlış yere kesin kayıt yapmaktansa geçici yere yazmak yeğdir.
+- Nereye yazacağından emin değilsen **işi durdurma:** en makul klasörü seç, seçimini tek
+  satırla belirt, kararsız kaldıysan soruyu `00-PANO.md`'nin "sorulacak" bölümüne yaz.
+  Hiçbir klasör uymuyorsa `Arastirma\` altına yaz — yanlış yere **kesin** kayıt yapmaktansa
+  geçici yere yazmak yeğdir. (Ana teslimatı `Arastirma\`ya gömme; o, ara notların yeridir.)
 
 ---
 
@@ -130,6 +132,9 @@ kişiye ait sağlık, kimlik ya da özel hayat bilgisi **olmaz**.
   ⚠️ **Aynı adlı dosya birden çok klasörde varsa** (`00-KUNYE.md`, `NEDIR.md` gibi) kısa
   bağlantı belirsiz kalır. Bu durumda yol tabanlı yaz:
   `[[Isler/ornek-is/00-KUNYE|Örnek İş künyesi]]`.
+  Bir **klasöre** (firma, kurum, proje) bağlantı verecekken o klasörün künye dosyasına
+  bağlan — `[[Firmalar/Ornek-Firma/00-KUNYE|Örnek Firma]]`. Karşılığı olmayan bir ada
+  `[[bağlantı]]` yazma; Obsidian'da boş link olur.
 - **Aynı belgeyi iki klasöre kopyalama.** Belge bir yerde yaşar; diğer yerden ona
   `[[bağlantı]]` verilir. İki nüshadan biri mutlaka bayatlar.
 
@@ -140,6 +145,14 @@ kişiye ait sağlık, kimlik ya da özel hayat bilgisi **olmaz**.
 - **Bilmediğin bir şeyi uydurma.** Tarih, sayı, madde numarası, kaynak adı, fiyat, isim —
   hiçbiri tahminle yazılmaz.
 - Emin değilsen **"emin değilim, doğrulanmalı" DE.** Bu bir kusur değil, doğru davranıştır.
+- **Uydurma ile "işaretlenmiş ön değer" aynı şey değildir.** Bir taslağın anlamlı olması için
+  bir değer gerekiyorsa (risk skoru, süre tahmini, kaba bütçe) onu **boş bırakma ya da uydurma**:
+  `[ÖN DEĞER: neye dayanarak]` diye yaz, tablonun/bölümün başına **"ön değerdir, doğrulanmadan
+  kesinleşmez"** uyarısı koy ve neyin doğrulanacağını söyle. Ölçüme dayanması gereken bir sayı
+  (saha ölçümü, gerçek fiyat, resmi rakam) ise ön değer **verilmez** — `[ÖLÇÜM GEREKLİ]` yazılır.
+- **Kaynağa erişemediysen bunu yaz.** Bir sayfa açılmıyorsa (sertifika/erişim hatası) ikincil
+  bir sonucu birincil kaynak gibi gösterme: `[KAYNAĞA ERİŞİLEMEDİ: adres · sebep]` diye
+  işaretle, elindeki dolaylı bilgiyi ayrıca belirt.
 - Bir belgede doldurulamayan alan varsa boş bırakma:
   **`[DOLDURULACAK: ne gerekiyor]`** yaz. Uydurulmuş bir değerden çok daha iyidir.
 - Bir kaynağa atıf verirken **kaynağın adı + adresi + eriştiğin tarih** birlikte gider.
