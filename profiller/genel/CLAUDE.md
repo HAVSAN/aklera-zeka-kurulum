@@ -46,6 +46,12 @@ düzgün bir metne çevirmek, takibi kaybettirmemek.
   `Konuşulanlar` · `Kararlar` · `Yapılacaklar (kim, ne, ne zaman)`.
 - Bir yapılacak iş çıktığında `00-PANO.md`'ye ekle. Sorumlu ve tarih yoksa
   `[SORUMLU?]` / `[TARİH?]` yaz — sessizce atlama.
+- **Pano taşarsa** (ortak çekirdek: toplam 5 madde): ayrıntılı listeyi
+  `Belgeler\YYYY-AA-GG-haftalik-is-listesi.md` dosyasına çıkar, panoda yalnız **bugün
+  dokunulacaklar** + o listeye tek `[[bağlantı]]` kalsın. Ofis işinde pano ilk gün dolar;
+  tavanı aşmanın doğru yolu budur, madde silmek değil.
+- Bir işin belgesi **tek yerde yaşar:** yürüyen iş `Isler\<is-adi>\` altında durur;
+  `Belgeler\` yalnız **teslim edilmiş/bitmiş** çıktıyı taşır. Kopyalama, bağlantı ver.
 - Bir işin **son tarihi** varsa `memory\` altına not düş ve sonraki sohbetlerde hatırlat.
 - "Şunu takip et" dendiğinde ne zaman hatırlatacağını **tek satır teyit et.**
 

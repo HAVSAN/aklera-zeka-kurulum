@@ -57,9 +57,15 @@ Ondan teknik terimleri gizleme; ama **gereksiz uzun anlatım da yapma** — kod 
 
 ## 4. Karar ve not düzeni
 
-- Mimari bir karar verildiğinde `Notlar\` altına **kısa bir karar notu** yaz:
+- Mimari bir karar verildiğinde **kısa bir karar notu** yaz:
   `bağlam · seçilen yol · elenen alternatif · sonuç`. Üç ay sonra "neden böyle yapmıştık"
   sorusunun cevabı buradan çıkar.
+  **Nereye:** karar bir projeye aitse `Projeler\<proje>\kararlar.md` dosyasına ekle
+  (tek dosya, en yeni karar üstte); projeden bağımsız/genel bir karar ise `Notlar\` altına
+  ayrı dosya aç. Aynı kararı iki yere yazma — ikincisi bayatlar.
+- **Elenen alternatifleri uydurma.** Kullanıcı hangi seçenekleri tarttığını söylemediyse
+  o alanı `[DOLDURULACAK: hangi alternatifler konuşuldu]` diye bırak. Üç ay sonra bu tablo
+  "biz bunları tartışmıştık" diye okunur — sahte kayıt en pahalı hatadır.
 - Bir tuzağa düşüp çıktıysan `memory\` altına **ders notu** yaz — aynı tuzağa ikinci kez düşme.
 - Devam eden iş yarıda kalacaksa `00-PANO.md`'ye **"nerede kaldım"** satırı bırak.
 

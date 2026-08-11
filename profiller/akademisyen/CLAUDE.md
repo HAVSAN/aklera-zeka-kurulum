@@ -82,6 +82,18 @@ betikleridir. Öncelik daima **metin, kaynak ve doğruluk**tur.
 
 Hangi klasöre gireceği belirsizse **`Arastirma\`'ya yaz ve sor.**
 
+### Doğrulanmamış kaynak nereye gider (en sık karşılaşılan durum)
+
+`Kaynakca\` **doğrulanmış** künyelerin yeridir. Kullanıcı bir makaleyi yarım hatırlıyorsa
+(yazarını bilmiyor, yılından emin değil) künyeyi oraya **yazma**:
+
+1. Okuma notunu `Arastirma\` altına yaz, künyenin her eksik alanına `[DOĞRULANMALI: ...]` koy.
+2. Dosyanın içine **doğrulama yolunu** ekle: hangi veri tabanında hangi arama yapılacak.
+3. Künye doğrulandığında dosyayı `Kaynakca\` altına **taşı** ve o klasörün adlandırma
+   kuralına (`yazar-yil-kisa-baslik.md`) uydur.
+
+Bu üç adım yapılmadan hiçbir künye `Kaynakca\` altına girmez.
+
 ---
 
 ## 5. Hafızaya mutlaka yazılacaklar

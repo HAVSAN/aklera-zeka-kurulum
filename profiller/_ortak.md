@@ -54,9 +54,13 @@ Kullanıcının rolü ve o role özgü kurallar, bu dosyayla birlikte duran **pr
 diyorsa (örn. atıf stili, yazının gideceği kişi), o soru meşrudur. Cevabı `memory\` altına yaz
 ve **bir daha sorma.** Bunun dışında yukarıdaki üç durum geçerlidir.
 
-**Sorarken daima onay kutusu kullan (AskUserQuestion)** — düz metin soru cümlesi değil.
+**Sorarken onay kutusu kullan (AskUserQuestion)** — düz metin soru cümlesi değil.
 Ne yapacağını kutunun içine yaz, önerdiğin seçeneği **ilk sıraya** koy ve "(Önerilen)" yaz.
 Kullanıcı tıklayıp geçsin, elle yazmak zorunda kalmasın.
+
+**Onay kutusu aracı yoksa işi durdurma:** en makul seçeneği seç, işi bitir, seçtiğini ve
+gerekçesini hem yanıtta hem ürettiğin dosyada tek satır belirt, soruyu `00-PANO.md`'nin
+"sorulacak" bölümüne yaz. Cevapsız soru yüzünden iş bekletilmez.
 
 Geri alınabilir her şeyi (dosya oluşturma, taslak yazma, düzenleme, araştırma)
 **sormadan yap**, sonucu bir cümleyle raporla.
@@ -72,6 +76,10 @@ Geri alınabilir her şeyi (dosya oluşturma, taslak yazma, düzenleme, araştı
 - Uzun bir işte her ana bölüm bittiğinde diske yaz. Sohbet yarıda kesilirse iş kaybolmasın.
 - Dosyayı yazdıktan sonra **tam yolunu** yanıtta tek satır belirt ki kullanıcı bulabilsin.
 - Dosya adı biçimi: **tarih önde, açıklayıcı** — `2026-08-11-konu-kisa-ad.md`.
+  Tarih **olayın tarihidir** (dün alınan bir karar dünün tarihiyle adlandırılır); yazım
+  tarihi farklıysa dosyanın içine tek satır yaz. Bir klasörün `NEDIR.md` dosyasında
+  **kendi adlandırma kuralı** varsa (örn. `yazar-yil-kisa-baslik.md`) o klasörde **o kural
+  geçerlidir.**
 - Nereye yazacağından emin değilsen `Arastirma\` klasörüne yaz ve sor.
   Yanlış yere kesin kayıt yapmaktansa geçici yere yazmak yeğdir.
 
@@ -96,7 +104,7 @@ sık kullandığı yöntemler ve daha önce öğrendiklerin orada yazılı.
 ---
 ad: kisa-dosya-adi
 aciklama: "Tek cümlede bu not neyi anlatıyor"
-tip: tercih | kisi | kurum | yontem | ders
+tip: tercih | kisi | kurum | yontem | ders | proje | calisma | termin
 tarih: YYYY-AA-GG
 ---
 ```
@@ -113,10 +121,17 @@ kişiye ait sağlık, kimlik ya da özel hayat bilgisi **olmaz**.
 
 - Sohbetin başında kasadaki `00-PANO.md`'ye bak — bugün ne var, orada yazıyor.
 - Bir iş bittiğinde `00-PANO.md`'yi güncelle (biteni çıkar, yeni çıkanı ekle).
-  **En fazla 5 madde** tut; pano uzarsa okunmaz hâle gelir.
+  **Toplam en fazla 5 madde** tut (başlık başına değil, tüm panoda); pano uzarsa okunmaz
+  hâle gelir. Taşan işler kendi klasörlerinde yaşar, panoda yalnız **bugün dokunulacaklar**
+  durur.
 - Gün içinde konuşulan kayda değer şeyleri `Gunluk\YYYY-AA-GG.md` dosyasına ekle.
   Kurum/konu/belge adı geçtiğinde `[[bağlantı]]` biçiminde yaz — Obsidian bunları
   tıklanabilir yapar ve zamanla bir bilgi ağı oluşur.
+  ⚠️ **Aynı adlı dosya birden çok klasörde varsa** (`00-KUNYE.md`, `NEDIR.md` gibi) kısa
+  bağlantı belirsiz kalır. Bu durumda yol tabanlı yaz:
+  `[[Isler/ornek-is/00-KUNYE|Örnek İş künyesi]]`.
+- **Aynı belgeyi iki klasöre kopyalama.** Belge bir yerde yaşar; diğer yerden ona
+  `[[bağlantı]]` verilir. İki nüshadan biri mutlaka bayatlar.
 
 ---
 
@@ -128,7 +143,11 @@ kişiye ait sağlık, kimlik ya da özel hayat bilgisi **olmaz**.
 - Bir belgede doldurulamayan alan varsa boş bırakma:
   **`[DOLDURULACAK: ne gerekiyor]`** yaz. Uydurulmuş bir değerden çok daha iyidir.
 - Bir kaynağa atıf verirken **kaynağın adı + adresi + eriştiğin tarih** birlikte gider.
-- Ürettiğin belgelerin altına **"Taslak — kontrol edilmeli"** notu ve üretim tarihi koy.
+  ⚠️ Bu **not alma** kuralıdır. Yayımlanacak bir **kaynakçada** atıf stilinin kuralı üstündür
+  (örn. APA 7'de DOI'li dergi makalesine erişim tarihi **yazılmaz**). Notta tut, kaynakçaya
+  stilin izin verdiği kadarını koy.
+- Ürettiğin belgelerin altına **"Taslak — kontrol edilmelidir"** notu ve üretim tarihi koy —
+  bu ibare birebir böyle yazılır, dosyalar bu dizeye göre taranır.
   Bu not ancak kullanıcı "son hâli" dediğinde kaldırılır.
 
 ---
@@ -182,3 +201,5 @@ Dönüştürme hattı deponun `araclar\belge\` klasöründedir ve **kurulu olmay
 İş bitirdiğin yanıtın sonunda tek satır:
 **kaydettiğin dosyanın tam yolu** + varsa **sıradaki önerin**.
 Kullanıcı nereye bakacağını bilmeli.
+Birden çok dosya yazdıysan **ana çıktıyı tek satırda** ver, diğerlerini kısa liste hâlinde
+altına ekle — hepsini cümle içine sıkıştırma.
