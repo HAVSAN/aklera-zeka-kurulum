@@ -598,6 +598,7 @@ profiller/                 → ↓ BİRLEŞTİRİLİP %USERPROFILE%\.claude\CLAU
   akademisyen/CLAUDE.md    + EK-MODUL.md
   genel/CLAUDE.md          + EK-MODUL.md
   yazilimci/CLAUDE.md      + EK-MODUL.md
+  isletme-sahibi-yonetici/CLAUDE.md + EK-MODUL.md   (TASLAK — Adım 0'a henüz bağlı değil, davranış testi bekliyor)
 
 ayarlar/                   → ↓ %USERPROFILE%\.claude\settings.json olur
   settings-sablon.json     → oto mod (acceptEdits) + allow/deny listeleri
